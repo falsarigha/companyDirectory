@@ -8,204 +8,268 @@ var department;
 
 
 $(document).ready(function() {
+    getResult();
+    filter();
+    getDepartment();
+    getLocation();
+    searchBar();
 // populate select department
-$.ajax({
-    url:"libs/php/getAllDepartments.php",
-    type: "POST",
-    dataType: "json",
-    success: function (result) {
-        
-        let departmentResult = result.data
-        
-        //sidebar
-        
-
-        $.each(departmentResult, function (index) {
-            
-          $("#selectDepartments").append(
-            $("<option>", {
-              value: result.data[index].id,
-              text: result.data[index].name,
-              
-            }),
-          );
-          var department = result.data[index].id;
-        // console.log(department);
-        });
-
-        //modal Add
-
-        $.each(departmentResult, function (index) {
-            
-            $("#departmentSelectAdd").append(
-              $("<option>", {
-                value: result.data[index].id,
-                text: result.data[index].name,
+    
+    function getDepartment(){
+        $.ajax({
+            url:"libs/php/getAllDepartments.php",
+            type: "POST",
+            dataType: "json",
+            success: function (result) {
                 
-              }),
-            );
-        });
-
-        //modal Edit
-
-        $.each(departmentResult, function (index) {
-            
-            $("#departmentSelectEdit").append(
-              $("<option>", {
-                value: result.data[index].id,
-                text: result.data[index].name,
+                let departmentResult = result.data
                 
-              }),
-            );
-          });
-      },
-      error: function (request, status, error) {
-        console.log(request,status,error);
-      },
+                //sidebar
+                
 
-});
+                $.each(departmentResult, function (index) {
+                    
+                $("#selectDepartments").append(
+                    $("<option>", {
+                    value: result.data[index].id,
+                    text: result.data[index].name,
+                    
+                    }),
+                );
+                //var department = result.data[index].id;
+                // console.log(department);
+                });
+
+                //modal Add
+
+                $.each(departmentResult, function (index) {
+                    
+                    $("#departmentSelectAdd").append(
+                    $("<option>", {
+                        value: result.data[index].id,
+                        text: result.data[index].name,
+                        
+                    }),
+                    );
+                });
+
+                //modal Edit
+
+                $.each(departmentResult, function (index) {
+                    
+                    $("#departmentSelectEdit").append(
+                    $("<option>", {
+                        value: result.data[index].id,
+                        text: result.data[index].name,
+                        
+                    }),
+                    );
+                });
+            },
+            error: function (request, status, error) {
+                console.log(request,status,error);
+            },
+
+        });
+    }
 
 // populate select location
-$.ajax({
-    url:"libs/php/getAllLocations.php",
-    type: "POST",
-    dataType: "json",
-    success: function (result) {
-        
-        let locationResult = result.data
-        
-        //sidebar
-
-        
-
-        $.each(locationResult, function (index) {
-          $("#selectLocations").append(
-            $("<option>", {
-              value: result.data[index].id,
-              text: result.data[index].name,
-              
-            }),
-          );
-          var location = result.data[index].id;
-        //   console.log(location);
-        });
-
-        //modal add
-        $.each(locationResult, function (index) {
-            $("#locationSelectAdd").append(
-              $("<option>", {
-                value: result.data[index].id,
-                text: result.data[index].name,
+    function getLocation(){
+        $.ajax({
+            url:"libs/php/getAllLocations.php",
+            type: "POST",
+            dataType: "json",
+            success: function (result) {
                 
-              }),
-            );
-        });
-
-        //modal edit
-        $.each(locationResult, function (index) {
-            $("#locationSelectEdit").append(
-              $("<option>", {
-                value: result.data[index].id,
-                text: result.data[index].name,
+                let locationResult = result.data
                 
-              }),
-            );
-        });
+                //sidebar
 
-      },
-      error: function (request, status, error) {
-        console.log(request,status,error);
-      },
-
-});
-
-// get all results
-
-$.ajax({
-    url:"libs/php/getAll.php",
-    method: "POST",
-    dataType: "json",
-    success: function(result){
-
-        let databaseData= result.data;
-        
-        // console.log(databaseData);
-        
-        $.each(databaseData, function(key, value){
-        // console.log(value.lastName);
-        $("#tableResult").append("<tr><td>" + value.firstName + " " + value.lastName + "</td><td>" +
-            value.email + "</td><td>" + value.location + "</td><td>" + value.department + 
-            "</td><td><button type=\"button\" data-bs-toggle=\"modal\" data-bs-target=\"#editEmployee\"><i class=\"edit far fa-edit\"></i></button>" +
-                "<button><i class=\"delete fas fa-trash-alt\"></i></button></td>");
-            
-        });
-
-        if(!searchBar){
-            let input = searchBar.toUpperCase();
-            let regex = new RegExp(input, 'i');
-            let output;
-            $('#SearchBar').keydown( function(){
-                $.each(databaseData, function(key, val){
-                    if((val.id.input(regex != -1) || val.name.input(regex) != -1)){
-                        output += "<tr>";
-                        output += "<td id='"+key+"'>"+val.id+"</td>";
-                        output += "<td id='"+key+"'>"+val.name+"</td>";
-                        output += "</tr>";
-                        
-                    };
+                $.each(locationResult, function (index) {
+                $("#selectLocations").append(
+                    $("<option>", {
+                    value: result.data[index].id,
+                    text: result.data[index].name,
+                    
+                    }),
+                );
+                //var location = result.data[index].id;
+                //   console.log(location);
                 });
+
+                //modal add
+                $.each(locationResult, function (index) {
+                    $("#locationSelectAdd").append(
+                    $("<option>", {
+                        value: result.data[index].id,
+                        text: result.data[index].name,
+                        
+                    }),
+                    );
+                });
+
+                //modal edit
+                $.each(locationResult, function (index) {
+                    $("#locationSelectEdit").append(
+                    $("<option>", {
+                        value: result.data[index].id,
+                        text: result.data[index].name,
+                        
+                    }),
+                    );
+                });
+
+            },
+            error: function (request, status, error) {
+                console.log(request,status,error);
+            },
+
+        });
+    }
+// get all results
+    function getResult() {
+    
+    var output;
+    $.ajax({
+        url:"libs/php/getAll.php",
+        method: "POST",
+        dataType: "json",
+        success: function(result){
+
+            let databaseData= result.data;
+            
+             console.log(databaseData);
+            
+            $.each(databaseData, function(key, value){
+            
+            output += "<tr id="+value.id+">";
+            output += "<td>"+value.lastName+ ' ' +value.firstName+"</td>";
+            output += "<td>"+value.email+"</td>";
+            output += "<td>"+value.location+"</td>";
+            output += "<td>"+value.department+"</td>";
+            output += "<td><button type=\"button\" data-bs-toggle=\"modal\" data-bs-target=\"#editEmployee\" class='editBtn'><i class=\"edit far fa-edit\"></i></button>" +
+                "<button class= remove><i class=\"delete fas fa-trash-alt\"></i></button></td>";
+            output += "</tr>";
+
+            
+
+            });
+            $('#myTable').html(output);
+            
+            // edit employee
+    
+            $('.editBtn').click(function() {
+                
+               //find id of record
+                var id =$(this).closest('tr').attr('id'); 
+                console.log(id);
+        
+                $.ajax({
+                    url:"libs/php/getAllPersonnel.php",
+                    method: "POST",
+                    dataType: "json",
+                    data:{
+                        id: id,  
+                        
+                    },
+                    success: function(result){
+                        console.log(result)
+                        $
+                    }
+                })
             })
-            $('tbody').html(output);
-        }
+
+            //remove employee
+            $('.remove').click(function() {
+                
+                //find id of record
+                 var id =$(this).closest('tr').attr('id'); 
+                 console.log(id);
+         
+                 $.ajax({
+                     url:"libs/php/getAllPersonnel.php",
+                     method: "POST",
+                     dataType: "json",
+                     data:{
+                         id: id,  
+                         
+                     },
+                     success: function(result){
+                         console.log(result)
+                     }
+                 })
+             })
+        
+        },
+        error: function (request, status, error) {
+            console.log(request,status,error);
+        },
+    })
+
+}
+
+
+//search bar live filter input
+    function searchBar(){
+    $("#searchBar").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#myTable tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+    }
+
+    function filter(){
+// apply filter based on Location
+
+        var selLocation = $('select[name=selectLocations]');
+        var selDepartment = $('select[name=selectDepartments]');
+        
+        selLocation.on("change", function() {
+            var value = $(this).find('option:selected').text();
+            $("#myTable tr").filter(function() {
+            $(this).toggle($(this).text().indexOf(value) > -1)
+            if(selDepartment){
+                $('select[name=selectDepartments]').prop("selectedIndex", 0);
+            }
+            });
+        });
+
+    // apply filterr based on Department
+    
+
+        selDepartment.on("change", function() {
+            var value = $(this).find('option:selected').text();
+            $("#myTable tr").filter(function() {
+            $(this).toggle($(this).text().indexOf(value) > -1)
+            if(selLocation){
+                $('select[name=selectLocations]').prop("selectedIndex", 0);
+            }
+            });
+        });
+
         
     }
-})
-});
+    // function filter(){
+    
+    // $('select[name=selectLocations]').add($('select[name=selectDepartments]')).change(function(){
+    //     var value = $(this).find('option:selected').text();
+        
+        
+    //                 $("#myTable tr").filter(function() {
+    //                 $(this).toggle($(this).text().indexOf(value) > -1)
+                        
+    //                 });
 
-//get result from search bar
-// var inputBar = ;
-// var location = ;
-// var department = ;
-
-// let getDepartment = null;
-
-
-// $(".searchBar").on("click", function() {
-//     input = searchBar.toUpperCase();
-
-//     if(!input){
-//     $.ajax({
-//         url: "libs/php/getAllPersonnel.php",
-//         method:"POST",
-//         dataType: "json",
-//         data: {
-//             firstName: input,
-//             // location: $('#selectDepartments option:selected').val(),
-//             // department: $('#selectLocations option:selected').val(),
-             
-//         },
-//         success: function(result){
-//             let dataSearch = result.data;
-            
-//             console.log(dataSearch);
-            
-//             $("#tableResult").empty();
-            
-//             $.each(dataSearch, function(key, value){
-//                 console.log(value.firstName);
-//                 $("#tableResult").append("<tr><td>" + value.firstName + " " + value.lastName + "</td><td>" +
-//                     value.email + "</td><td>" + value.location + "</td><td>" + value.department + 
-//                     "</td><td><button type=\"button\" data-bs-toggle=\"modal\" data-bs-target=\"#editEmployee\"><i class=\"edit far fa-edit\"></i></button>" +
-//                         "<button><i class=\"delete fas fa-trash-alt\"></i></button></td>");
-                    
-//                 })
-//         }
+    // })
+    // }
 
     
-//     })
-//         } else {
-//             $("#tableResult").empty();
-//             alert('Error input not valid');
-//         }
-// });
 
+    $('.reset').on('click', function(){
+        getResult();
+        $('select[name=selectDepartments]').prop("selectedIndex", 0);
+        $('select[name=selectLocations]').prop("selectedIndex", 0);
+        $('#searchBar').val('');
+    })
+});
