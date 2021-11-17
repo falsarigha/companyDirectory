@@ -5,7 +5,7 @@ $(window).on("load", function() {
 var searchBar = $("#searchBar").val();
 var location;
 var department;
-
+var id;
 
 $(document).ready(function() {
     getResult();
@@ -161,7 +161,7 @@ $(document).ready(function() {
             $('.editBtn').click(function() {
 
                //find id of record
-                window.id =$(this).closest('tr').attr('id');
+                var id =$(this).closest('tr').attr('id');
                 //console.log(id);
 
                 $.ajax({
@@ -174,7 +174,7 @@ $(document).ready(function() {
                     },
                     success: function(result){
                         console.log(result.data[0])
-
+                        
                         firstName = result.data[0]['firstName']
                         lastName = result.data[0]['lastName']
                         var email = result.data[0]['email']
@@ -197,12 +197,12 @@ $(document).ready(function() {
 
             //remove employee
             $('.remove').click(function() {
+                var id =$(this).closest('tr').attr('id');
+                console.log(id);
                 $('.btnRemove').click(function() {
-                //find id of record
-                // var id =$(this).closest('tr').attr('id');
-                // console.log(id);
 
-
+                    //find id of record
+                
                 $.ajax({
                     url:"libs/php/deletePeronnelByID.php",
                     method: "POST",
@@ -215,7 +215,7 @@ $(document).ready(function() {
                         console.log(result.data)
                         if (result.status.name == "ok") {
                             console.log("Employee updated");
-
+                            $("#removeCard").modal("hide");
                             $(document).ready(function () {
                                 location.reload();
                             });
@@ -277,7 +277,45 @@ $('.btnUpdate').on('click', function(){
         },
     })
 });
-    }
+    //add Employee
+    $('.btdAdd').on('click', function(){
+
+    var firstName = $('#addEmployee #firstNameEdit').val();
+    var lastName = $('#addEmployee #lastNameEdit').val();
+    var email = $('#addEmployee #emailEdit').val();
+    var departmentID = $('select[id=departmentSelectAdd] option').filter(':selected').val();
+    var locationID = $('select[id=locationSelectAdd] option').filter(':selected').val();
+
+    $.ajax({
+        url:"libs/php/editPersonnel.php",
+        method: "POST",
+        dataType: "json",
+        data:{
+            id: id,
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            departmentID: departmentID,
+            locationID: locationID
+
+        },
+        success: function(result){
+            console.log(result.data)
+            if (result.status.name == "ok") {
+                console.log("Employee updated");
+                $("#editEmployee").modal("hide");
+                $(document).ready(function () {
+                    location.reload();
+                });
+            }
+        },
+        error: function (request, status, error) {
+            console.log(request,status,error);
+        },
+    })
+    })
+
+}
 
 //search bar live filter input
     function searchBar(){

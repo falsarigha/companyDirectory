@@ -31,7 +31,7 @@
 		exit;
 
 	}	
-
+    
 	// SQL does not accept parameters and so is not prepared
 
 	$query = $conn->prepare('UPDATE personnel p LEFT JOIN department d ON (d.id = p.departmentID) LEFT JOIN location l ON (l.id = d.locationID) SET p.firstName = ?, p.lastName = ?, p.jobTitle = " ", p.email = ?, p.departmentID = ?, d.locationID = ? WHERE p.id = ?');
