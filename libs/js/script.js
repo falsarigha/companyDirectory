@@ -278,41 +278,55 @@ $('.btnUpdate').on('click', function(){
     })
 });
     //add Employee
-    $('.btdAdd').on('click', function(){
+    $('.btnAdd').on('click', function(){
+            
+            var firstName = $('#addEmployee #firstNameAdd').val();
+            var lastName = $('#addEmployee #lastNameAdd').val();
+            var email = $('#addEmployee #emailAdd').val();
+            var departmentID = $('select[id=departmentSelectAdd] option').filter(':selected').val();
+            // var departmentName = $('select[id=departmentSelectAdd] option').filter(':selected').text();
+            // var locationID = $('select[id=locationSelectAdd] option').filter(':selected').val();
+            // var locationName = $('select[id=locationSelectAdd] option').filter(':selected').text();
 
-    var firstName = $('#addEmployee #firstNameEdit').val();
-    var lastName = $('#addEmployee #lastNameEdit').val();
-    var email = $('#addEmployee #emailEdit').val();
-    var departmentID = $('select[id=departmentSelectAdd] option').filter(':selected').val();
-    var locationID = $('select[id=locationSelectAdd] option').filter(':selected').val();
+            $.ajax({
+                url:"libs/php/insertPersonnel.php",
+                method: "POST",
+                dataType: "json",
+                data:{
+                    
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: email,
+                    departmentID: departmentID,
+                    
 
-    $.ajax({
-        url:"libs/php/editPersonnel.php",
-        method: "POST",
-        dataType: "json",
-        data:{
-            id: id,
-            firstName: firstName,
-            lastName: lastName,
-            email: email,
-            departmentID: departmentID,
-            locationID: locationID
+                },
+                success: function(result){
+                    //console.log(result.data)
+                    if (result.status.name == "ok") {
+                        if(firstName == result.data[0]['firstName'] && lastName == result.data[0]['lastName'] &&
+                            email == result.data[0]['email'] ){
+                            
+                            console.log("Employee Added");
+                            $("#editEmployee").modal("hide");
+                            
+                            $(".modalAdd").on("hidden.bs.modal", function(){
+                                $(".modal-body").html("");
+                            });
+                            
+                        }
+                        
+                        
+                    }
+                    $(document).ready(function () {
+                        location.reload();
+                    });
 
-        },
-        success: function(result){
-            console.log(result.data)
-            if (result.status.name == "ok") {
-                console.log("Employee updated");
-                $("#editEmployee").modal("hide");
-                $(document).ready(function () {
-                    location.reload();
-                });
-            }
-        },
-        error: function (request, status, error) {
-            console.log(request,status,error);
-        },
-    })
+                },
+                error: function (request, status, error) {
+                    console.log(request,status,error);
+                },
+            })
     })
 
 }
