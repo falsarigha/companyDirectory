@@ -235,17 +235,23 @@ $('.btnUpdate').on('click', function(){
     //alert($('#editEmployee #emailEdit').val())
     // alert($('#editEmployee #lastNameEdit').val())
     // alert($('#editEmployee #firstNameEdit').val());
+    var firstName = $('#editEmployee #firstNameEdit').val();
+    var lastName = $('#editEmployee #lastNameEdit').val();
+    var email = $('#editEmployee #emailEdit').val();
+    var departmentID = $('select[id=departmentSelectEdit] option').filter(':selected').val();
+    var locationID = $('select[id=locationSelectEdit] option').filter(':selected').val();
+    
     $.ajax({
         url:"libs/php/editPersonnel.php",
         method: "POST",
         dataType: "json",
         data:{
             id: id,
-            firstName: $('#editEmployee #firstNameEdit').val(),
-            lastName: $('#editEmployee #lastNameEdit').val(),
-            email: $('#editEmployee #emailEdit').val(),
-            departmentID: $('select[id=departmentSelectEdit] option').filter(':selected').val(),
-            locationID: $('select[id=locationSelectEdit] option').filter(':selected').val()
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            departmentID: departmentID,
+            locationID: locationID
             
         },
         success: function(result){
