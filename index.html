@@ -177,7 +177,7 @@
 
         <!--Edit Employee-->
         <div
-            class="modal fade"
+            class="modal fade editEmployee"
             id="editEmployee"
             data-bs-backdrop="static"
             data-bs-keyboard="false"
@@ -192,49 +192,51 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
-                        <div class="mb-3">
-                        <label for="firstNameInput" class="form-label">
+                    <form action=""  method="post">
+                        <div class="mb-3" >
+                        <label for="firstNameEdit" class="form-label">
                         First Name:
                         </label>
-                        <input type="text" class="form-control firstNameInput" id="firstNameInput" required/>
+                        <input type="text" class="form-control firstNameEdit"  id="firstNameEdit" name="firstNameEdit" required/>
                         </div>
                         <div class="mb-3">
-                        <label for="lastNameInput" class="form-label"
-                            >Last Name:
+                        <label for="lastNameEdit" class="form-label">
+                        Last Name:
                         </label>
                         <input
                             type="text"
-                            class="form-control lastNameInput"
-                            id="lastNameInput"
+                            class="form-control lastNameEdit"
+                            id="lastNameEdit"
+                            name="lastNameEdit"
                             required
                         />
                         </div>
-                        <div class="mb-3">
-                        <label for="emailInput" class="form-label">Email:</label>
+                        <div class="mb-3" id="test">
+                        <label for="emailEdit" class="form-label">Email:</label>
                         <input
                             type="email"
-                            class="form-control emailInput"
-                            id="emailInput"
+                            class="form-control emailEdit"
+                            id="emailEdit"
+                            name="emailEdit"
                             required
                         />
                         </div>
                         <div class="mb-3">
-                        <label for="departmentSelectEdit" class="form-label"
-                            >Department:
+                        <label for="locationSelectEdit" class="form-label">
+                        Location:
+                        </label>
+                        <select class="form-select" id="locationSelectEdit">
+                            <option value="selectALocation">Select a Location</option>
+                        </select>
+                        </div>
+                        <div class="mb-3">
+                        <label for="departmentSelectEdit" class="form-label">
+                        Department:
                         </label>
                         <select class="form-select" id="departmentSelectEdit">
                             <option value="selectADepartment">
                             Select a Department
                             </option>
-                        </select>
-                        </div>
-                        <div class="mb-3">
-                        <label for="locationSelectEdit" class="form-label"
-                            >Location:
-                        </label>
-                        <select class="form-select" id="locationSelectEdit">
-                            <option value="selectALocation">Select a Location</option>
                         </select>
                         </div>
                     </form>
@@ -243,8 +245,9 @@
                 <div class="modal-footer">
                     <button
                     type="button"
-                    class="btn btn-primary"
+                    class="btnUpdate btn-primary"
                     data-bs-dismiss="modal"
+                    id="#btnUpdate"
                     >
                     Submit
                     </button>

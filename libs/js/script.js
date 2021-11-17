@@ -161,8 +161,8 @@ $(document).ready(function() {
             $('.editBtn').click(function() {
                 
                //find id of record
-                var id =$(this).closest('tr').attr('id'); 
-                console.log(id);
+                window.id =$(this).closest('tr').attr('id'); 
+                //console.log(id);
         
                 $.ajax({
                     url:"libs/php/getAllPersonnel.php",
@@ -173,32 +173,51 @@ $(document).ready(function() {
                         
                     },
                     success: function(result){
-                        console.log(result)
-                        $
-                    }
+                        console.log(result.data[0])
+
+                        var firstName = result.data[0]['firstName']
+                        var lastName = result.data[0]['lastName']
+                        var email = result.data[0]['email']
+                        var departmentID = result.data[0]['departmentID']
+                        var locationID = result.data[0]['locationID']
+
+                        $('#firstName').val(firstName);
+                        $('#lastName').val(lastName);
+                        $('#email').val(email);
+                        $('#departmentSelectEdit').val(departmentID);
+                        $('#locationSelectEdit').val(locationID);
+                        
+                    },error: function (request, status, error) {
+                        console.log(request,status,error);
+                    },
+
+                    
                 })
             })
 
             //remove employee
-            $('.remove').click(function() {
+            // $('.remove').click(function() {
                 
-                //find id of record
-                 var id =$(this).closest('tr').attr('id'); 
-                 console.log(id);
+            //     find id of record
+            //     var id =$(this).closest('tr').attr('id'); 
+            //     console.log(id);
          
-                 $.ajax({
-                     url:"libs/php/getAllPersonnel.php",
-                     method: "POST",
-                     dataType: "json",
-                     data:{
-                         id: id,  
-                         
-                     },
-                     success: function(result){
-                         console.log(result)
-                     }
-                 })
-             })
+            //     $.ajax({
+            //         url:"libs/php/getAllPersonnel.php",
+            //         method: "POST",
+            //         dataType: "json",
+            //         data:{
+            //             id: id,  
+                        
+            //         },
+            //         success: function(result){
+            //             console.log(result)
+            //         },
+            //         error: function (request, status, error) {
+            //             console.log(request,status,error);
+            //         },
+            //     })
+            // })
         
         },
         error: function (request, status, error) {
@@ -206,8 +225,47 @@ $(document).ready(function() {
         },
     })
 
-}
+}    
 
+
+
+//Update Employee
+$('.btnUpdate').on('click', function(){
+    
+    //alert($('#editEmployee #emailEdit').val())
+    // alert($('#editEmployee #lastNameEdit').val())
+    // alert($('#editEmployee #firstNameEdit').val());
+    $.ajax({
+        url:"libs/php/editPersonnel.php",
+        method: "POST",
+        dataType: "json",
+        data:{
+            id: id,
+            firstName: $('#editEmployee #firstNameEdit').val(),
+            lastName: $('#editEmployee #lastNameEdit').val(),
+            email: $('#editEmployee #emailEdit').val(),
+            departmentID: $('select[id=departmentSelectEdit] option').filter(':selected').val(),
+            locationID: $('select[id=locationSelectEdit] option').filter(':selected').val()
+            
+        },
+        success: function(result){
+            console.log(result)
+            if (result.status.name == "ok") {
+                console.log("Employee updated");
+                $("#editEmployee").modal("hide");
+                $(document).ready(function () {
+                    location.reload();
+                });
+            }else{
+                console.log('error');
+            }
+        },
+        error: function (request, status, error) {
+            console.log(request,status,error);
+        },
+    })
+});
+    
 
 //search bar live filter input
     function searchBar(){
