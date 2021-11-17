@@ -34,15 +34,15 @@
 
 	// SQL does not accept parameters and so is not prepared
 
-	$query = $conn->prepare('UPDATE personnel p LEFT JOIN department d ON (d.id = p.departmentID) LEFT JOIN location l ON (l.id = d.locationID) set p.firstName = ?, p.lastName = ?, p.jobTitle = " ", p.email = ?, p.departmentID = ?, d.locationID = ? WHERE p.id = ?');
+	$query = $conn->prepare('UPDATE personnel p LEFT JOIN department d ON (d.id = p.departmentID) LEFT JOIN location l ON (l.id = d.locationID) SET p.firstName = ?, p.lastName = ?, p.jobTitle = " ", p.email = ?, p.departmentID = ?, d.locationID = ? WHERE p.id = ?');
 
-    // $_REQUEST["id"] = '23';
-    // $_REQUEST["lastName"] = 'Majora';
-    // $_REQUEST["firstName"] = 'Roma';
-    // $_REQUEST["email"] = 'roma@qwerty.net';
-    // $_REQUEST["departmentID"] = '1';
-    // $_REQUEST["locationID"] = '1';
-	$query->bind_param("iiiiii", $_POST["firstName"], $_POST["lastName"], $_POST["email"], $_POST["departmentID"], $_POST["locationID"], $_POST["id"]);
+    //  $_REQUEST["id"] = '97';
+    //  $_REQUEST["lastName"] = 'Mora';
+    //  $_REQUEST["firstName"] = 'Lora';
+    //  $_REQUEST["email"] = 'loram@qwerty.net';
+    //  $_REQUEST["departmentID"] = '3';
+    //  $_REQUEST["locationID"] = '2';
+	$query->bind_param("sssiii", $_REQUEST["firstName"], $_REQUEST["lastName"], $_REQUEST["email"], $_REQUEST["departmentID"], $_REQUEST["locationID"], $_REQUEST["id"]);
 
 	$query->execute();
 	
@@ -61,13 +61,40 @@
 
 	}
 
+    $query = 'SELECT p.id, p.lastName, p.firstName, p.jobTitle, p.email, d.name as department, l.name as location FROM personnel p LEFT JOIN department d ON (d.id = p.departmentID) LEFT JOIN location l ON (l.id = d.locationID) ORDER BY p.lastName, p.firstName, d.name, l.name';
+
+	$result = $conn->query($query);
+	
+	if (!$result) {
+
+		$output['status']['code'] = "400";
+		$output['status']['name'] = "executed";
+		$output['status']['description'] = "query failed";	
+		$output['data'] = [];
+
+		mysqli_close($conn);
+
+		echo json_encode($output); 
+
+		exit;
+
+	}
+   
+   	$data = [];
+
+	while ($row = mysqli_fetch_assoc($result)) {
+
+		array_push($data, $row);
+
+	}
+
 	
 
 	$output['status']['code'] = "200";
 	$output['status']['name'] = "ok";
 	$output['status']['description'] = "success";
 	$output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
-	$output['data'] = [];
+	$output['data'] = $data;
 	
 	mysqli_close($conn);
 
