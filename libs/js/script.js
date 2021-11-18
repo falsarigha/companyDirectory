@@ -6,6 +6,8 @@ var searchBar = $("#searchBar").val();
 var location;
 var department;
 var id;
+var output;
+
 
 $(document).ready(function() {
     getResult();
@@ -129,7 +131,7 @@ $(document).ready(function() {
 // get all results
     function getResult() {
 
-    var output;
+    
     $.ajax({
         url:"libs/php/getAll.php",
         method: "POST",
@@ -138,7 +140,7 @@ $(document).ready(function() {
 
             let databaseData= result.data;
 
-             console.log(databaseData);
+            //console.log(databaseData);
 
             $.each(databaseData, function(key, value){
 
@@ -160,9 +162,9 @@ $(document).ready(function() {
 
             $('.editBtn').click(function() {
 
-               //find id of record
-                var id =$(this).closest('tr').attr('id');
-                //console.log(id);
+               //find id of record and use as global
+                window.id =$(this).closest('tr').attr('id');
+                console.log(id);
 
                 $.ajax({
                     url:"libs/php/getAllPersonnel.php",
@@ -216,6 +218,8 @@ $(document).ready(function() {
                         if (result.status.name == "ok") {
                             console.log("Employee updated");
                             $("#removeCard").modal("hide");
+                            
+                            //reload page
                             $(document).ready(function () {
                                 location.reload();
                             });
@@ -248,7 +252,7 @@ $('.btnUpdate').on('click', function(){
     var email = $('#editEmployee #emailEdit').val();
     var departmentID = $('select[id=departmentSelectEdit] option').filter(':selected').val();
     var locationID = $('select[id=locationSelectEdit] option').filter(':selected').val();
-
+    
     $.ajax({
         url:"libs/php/editPersonnel.php",
         method: "POST",
@@ -267,6 +271,8 @@ $('.btnUpdate').on('click', function(){
             if (result.status.name == "ok") {
                 console.log("Employee updated");
                 $("#editEmployee").modal("hide");
+               
+                
                 $(document).ready(function () {
                     location.reload();
                 });
@@ -302,18 +308,24 @@ $('.btnUpdate').on('click', function(){
 
                 },
                 success: function(result){
-                    //console.log(result.data)
+
+                    console.log(result);
+
                     if (result.status.name == "ok") {
                         if(firstName == result.data[0]['firstName'] && lastName == result.data[0]['lastName'] &&
                             email == result.data[0]['email'] ){
                             
                             console.log("Employee Added");
-                            $("#editEmployee").modal("hide");
+                            
                             
                             $(".modalAdd").on("hidden.bs.modal", function(){
                                 $(".modal-body").html("");
                             });
+
                             
+                            
+                        }else{
+                            $('#modalError').modal('show');
                         }
                         
                         
