@@ -406,12 +406,6 @@ $(document).ready(function() {
                             location.reload();
                         });
 
-                        // console.log(departmentName)
-                        // console.log(locationID)
-                        // console.log(locationName)
-                        // console.log(email)
-                        // console.log(lastName)
-                        // console.log(firstName)
                     }
                 },
                 error: function (request, status, error) {
