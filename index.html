@@ -38,11 +38,26 @@
                         <!--<button class="btn btn-outline-success me-4 searchBar" type="button">Search</button>-->
                             <button 
                                 type="button" 
-                                class="btn btn-outline-success" 
+                                class="btn btn-outline-success btn-lg ms-2" 
                                 data-bs-toggle="modal" 
                                 data-bs-target="#addEmployee">
-                                    Add
+                                <i title="Add Employee" class="fas fa-user-plus"></i>
                             </button>
+                            <button 
+                                type="button" 
+                                class="btn btn-outline-success btn-lg ms-2" 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#addLocation">
+                                <i title="Add Location" class="fas fa-globe"></i>
+                            </button>
+                            <button 
+                                type="button" 
+                                class="btn btn-outline-success btn-lg ms-2" 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#addDepartment">
+                                <i title="Add Department" class="fas fa-folder-plus"></i>
+                            </button>
+                            
                 </form>
             </div>
         </div>
@@ -57,23 +72,22 @@
                     <h5>Apply filter</h5>
                         <hr>
                         </br>
-                        <select name="selectLocations" id="selectLocations" class="custom-select form-control" ><!--to check class-->
-                            <option value="" name="selectLocations">Select Location</option>
+                        <select name="selectLocations" id="selectLocations" class="custom-select form-control location" ><!--to check class-->
+                            <option value="selectALocation" name="selectLocations">Select a Location</option>
                         </select>
                         </br>
-                        <select name="selectDepartments" id="selectDepartments" class="custom-select form-control" ><!--to check class-->
-                            <option value="" name="selectDepartments">Select Department</option>
+                        <select name="selectDepartments" id="selectDepartments" class="custom-select form-control " ><!--to check class-->
+                            <option value="selectADepartment" name="selectDepartments">Select a Department</option>
                             
                         </select>
                         </br>
-                        <button class="btn btn-outline-success" type="submit">Apply</button>
-                        <button class="btn btn-outline-success reset" type="reset">Reset</button>
+                        <button class="btn btn-outline-danger reset" type="reset">Reset</button>
                 </div>
                 <div class="col-sm-10 result"> 
                     <div class="container center">    
                         
-                        <h3>Test</h3>
-                        <p>Lorem ipsum...</p>
+                        <!--<h3>Test</h3>
+                        <p>Lorem ipsum...</p>-->
                         <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar" class="tableResult">
                             <table class="table table-dark table-striped  align-middle" id="tableResult">
                                 <thead>
@@ -116,7 +130,7 @@
                         <label for="firstNameAdd" class="form-label">
                         First Name:
                         </label>
-                        <input type="text" class="form-control firstNameAdd" id="firstNameAdd" required/>
+                        <input type="text" class="form-control firstNameAdd" id="firstNameAdd" placeholder="First Name" required/>
                         </div>
                         <div class="mb-3">
                         <label for="lastNameAdd" class="form-label">
@@ -126,6 +140,7 @@
                             type="text"
                             class="form-control"
                             id="lastNameAdd"
+                            placeholder="Last Name"
                             required
                         />
                         </div>
@@ -135,23 +150,24 @@
                             type="email"
                             class="form-control"
                             id="emailAdd"
+                            placeholder="Email"
                             required
                         />
                         </div>
                         <div class="mb-3">
-                        <label for="locationSelectAdd" class="form-label"
+                        <label for="addSelectLocation" class="form-label"
                             >Location:
                         </label>
-                        <select class="form-select" id="locationSelectAdd">
-                            <option value="selectALocation">Select a Location</option>
+                        <select class="form-select" id="addSelectLocation">
+                            <option name="selectLocationsFilter" value="selectALocation">Select a Location</option>
                         </select>
                         </div>
                         <div class="mb-3">
                         <label for="departmentSelectAdd" class="form-label">
                         Department:
                         </label>
-                        <select class="form-select" id="departmentSelectAdd">
-                            <option value="selectDepartment">
+                        <select class="form-select " id="departmentSelectAdd" name="selectDepartmentFilter">
+                            <option  value="selectDepartment">
                             Select a Department
                             </option>
                         </select>
@@ -163,6 +179,7 @@
                     <button
                     type="button"
                     class="btnAdd btn btn-primary"
+                    id="btnAdd"
                     data-bs-dismiss="modal"
                     >
                     Submit
@@ -202,7 +219,7 @@
                         <label for="firstNameEdit" class="form-label">
                         First Name:
                         </label>
-                        <input type="text" class="form-control firstNameEdit"  id="firstNameEdit" name="firstNameEdit" required/>
+                        <input type="text" class="form-control firstNameEdit"  id="firstNameEdit" name="firstNameEdit" placeholder="First Name" required/>
                         </div>
                         <div class="mb-3">
                         <label for="lastNameEdit" class="form-label">
@@ -213,6 +230,7 @@
                             class="form-control lastNameEdit"
                             id="lastNameEdit"
                             name="lastNameEdit"
+                            placeholder="Last Name"
                             required
                         />
                         </div>
@@ -223,6 +241,7 @@
                             class="form-control emailEdit"
                             id="emailEdit"
                             name="emailEdit"
+                            placeholder="Email"
                             required
                         />
                         </div>
@@ -230,15 +249,15 @@
                         <label for="locationSelectEdit" class="form-label">
                         Location:
                         </label>
-                        <select class="form-select" id="locationSelectEdit">
-                            <option value="selectALocation">Select a Location</option>
+                        <select class="form-select" name='LocationFilterDo' id="locationSelectEdit">
+                            <option name="locationFilter" value="selectALocation">Select a Location</option>
                         </select>
                         </div>
                         <div class="mb-3">
                         <label for="departmentSelectEdit" class="form-label">
                         Department:
                         </label>
-                        <select class="form-select" id="departmentSelectEdit">
+                        <select class="form-select" name="deaprtmentFilter" id="departmentSelectEdit">
                             <option value="selectADepartment">
                             Select a Department
                             </option>
@@ -289,7 +308,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btnRemove btn btn-primary">Save changes</button>
+                    <button type="button" class="btnRemove btn btn-danger">Remove</button>
                 </div>
                 </div>
             </div>
@@ -297,28 +316,347 @@
 
             <!--Modal error-->
             
-            <div class="modal modalError fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div
+            class="modal fade modalError" 
+            id="staticBackdrop" 
+            data-bs-backdrop="static" 
+            data-bs-keyboard="false" 
+            tabindex="-1" 
+            aria-labelledby="staticBackdropLabel" 
+            aria-hidden="true"
+            >
             <div class="modal-dialog">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                    <h5 class="modal-title" id="staticBackdropLabel">Warning</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Error the employee is already in the system</p>
+                    <p>The employee is already in the system</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Understood</button>
+                    <button 
+                    type="button"
+                    class="btn btn-primary"
+                    data-bs-toggle="modal" 
+                    data-bs-target="#addEmployee" 
+                    data-bs-dismiss="modal"
+                    >
+                    Understood
+                    </button>
                 </div>
                 </div>
             </div>
             </div>
+            <!--Modal error upgrade-->
+            <div
+            class="modal fade modalErrorUpdate" 
+            id="staticBackdrop" 
+            data-bs-backdrop="static" 
+            data-bs-keyboard="false" 
+            tabindex="-1" 
+            aria-labelledby="staticBackdropLabel" 
+            aria-hidden="true"
+            >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Warning</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>The employee is already in the system</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button 
+                    type="button"
+                    class="btn btn-primary"
+                    data-bs-toggle="modal" 
+                    data-bs-target="#editEmployee" 
+                    data-bs-dismiss="modal"
+                    >
+                    Understood
+                    </button>
+                </div>
+                </div>
+            </div>
+        </div>
+        <!--Add Location Modal-->
+        <div
+            class="modal modalLocation fade"
+            id="addLocation"
+            data-bs-backdrop="static"
+            data-bs-keyboard="false"
+            tabindex="-1"
+            aria-labelledby="addLocationLabel"
+            aria-hidden="true"
+            >
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addLocationLabel">Locations</h5>             
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                        <label for="locationAdd" class="form-label">
+                        Add Location:
+                        </label>
+                        <input type="text" class="form-control locationAdd" id="locationAdd" placeholder="Location Name" required/>
+                        </div>           
+                    </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button
+                        type="button"
+                        class="btnAddLocation btn btn-primary"
+                        id="btnAddLocation"
+                        data-bs-dismiss="modal"
+                        >
+                        Submit
+                        </button>
+                        <button type="button" 
+                        class="btn btn-danger"
+                        data-bs-toggle="modal" 
+                        data-bs-target=".modalRemoveLocation" 
+                        >
+                        Remove
+                        </button>
+                        <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                        >
+                        Close
+                        </button>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--modal location error-->
+        <div
+            class="modal fade modalErrorLocation" 
+            id="staticBackdrop" 
+            data-bs-backdrop="static" 
+            data-bs-keyboard="false" 
+            tabindex="-1" 
+            aria-labelledby="staticBackdropLabel" 
+            aria-hidden="true"
+            >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Warning</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>The Location is already in the system</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button 
+                    type="button"
+                    class="btn btn-danger"
+                    data-bs-toggle="modal" 
+                    data-bs-target="#addLocation" 
+                    data-bs-dismiss="modal"
+                    >
+                    Understood
+                    </button>
+                </div>
+                </div>
+            </div>
+        </div>
+        <!--modal remove location-->
+        <div
+            class="modal fade modalRemoveLocation" 
+            id="staticBackdrop" 
+            data-bs-backdrop="static" 
+            data-bs-keyboard="false" 
+            tabindex="-1" 
+            aria-labelledby="staticBackdropLabel" 
+            aria-hidden="true"
+            >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Warning</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form>
+                <div class="modal-body">                
+                <div class="mb-3">
+                        <label for="locationSelectRemove" class="form-label">
+                        Delete Location:
+                        </label>
+                        <select class="form-select" name="deliteLocationFilter" id="locationSelectRemove">
+                            <option value="selectALocation">Select a Location</option>
+                        </select>
+                    </div>
+                </div>
+                </form>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button 
+                    type="button"
+                    class="btn btn-danger"
+                    id="removeLocation"
+                    data-bs-dismiss="modal"
+                    >
+                    Remove
+                    </button>
+                </div>
+                </div>
+            </div>
+        </div>
+        <!--Add Department Modal-->
+         <div
+            class="modal modalDepartment fade"
+            id="addDepartment"
+            data-bs-backdrop="static"
+            data-bs-keyboard="false"
+            tabindex="-1"
+            aria-labelledby="addDepartmentLabel"
+            aria-hidden="true"
+            >
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addDepartmentLabel">Departments</h5>             
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                        <label for="departmentAdd" class="form-label">
+                        Department:
+                        </label>
+                        <input type="text" class="form-control departmentAdd" id="departmentAdd" placeholder="Department Name" required/>
+                        </div>         
+                        <div class="mb-3">
+                        <label for="locationSelectAdd" class="form-label">
+                        Location:
+                        </label>
+                        <select class="form-select location" id="locationSelectAdd" name="LocationFilterD"required>
+                            <option value="selectALocation">Select a Location</option>
+                        </select>
+                        </div>  
+                    </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button
+                        type="button"
+                        class="btnAddDepartment btn btn-primary"
+                        id="btnAddDepartment"
+                        data-bs-dismiss="modal">
+                        Submit
+                        </button>
+                        <button type="button" 
+                        class="btn btn-danger"
+                        data-bs-toggle="modal" 
+                        data-bs-target=".modalRemove" 
+                        >
+                        Remove
+                        </button>
+                        <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal"                  
+                        >
+                        Close
+                        </button>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--modal department error-->
+        <div
+            class="modal fade modalErrorDepartment" 
+            id="staticBackdrop" 
+            data-bs-backdrop="static" 
+            data-bs-keyboard="false" 
+            tabindex="-1" 
+            aria-labelledby="staticBackdropLabel" 
+            aria-hidden="true"
+            >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Warning</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>The Department is already in the system</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button 
+                    type="button"
+                    class="btn btn-danger"
+                    data-bs-toggle="modal" 
+                    data-bs-target="#addDepartment" 
+                    data-bs-dismiss="modal"
+                    >
+                    Understood
+                    </button>
+                </div>
+                </div>
+            </div>
+        </div>
+        <!--modal remove department-->
+        <div
+            class="modal fade modalRemove" 
+            id="staticBackdrop" 
+            data-bs-backdrop="static" 
+            data-bs-keyboard="false" 
+            tabindex="-1" 
+            aria-labelledby="staticBackdropLabel" 
+            aria-hidden="true"
+            >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Warning</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form>
+                <div class="modal-body">                
+                <div class="mb-3">
+                        <label for="departmentSelectRemove" class="form-label">
+                        Delete Department:
+                        </label>
+                        <select class="form-select" id="departmentSelectRemove" name='deaprtmentFilterD'>
+                            <option value="selectADepartment">
+                            Select a Department
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                </form>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button 
+                    type="button"
+                    class="btn btn-danger"
+                    id="removeDepartment"
+                    data-bs-dismiss="modal"
+                    >
+                    Remove
+                    </button>
+                </div>
+                </div>
+            </div>
+        </div>
     </main>
 
     <!--<footer class="footer mt-auto py-3 bg-light">
     <div class="container">
-        <span class="text-muted"></span>
+        <div>Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
     </div>
     </footer>-->
         

@@ -89,28 +89,28 @@
 
 	// }
 
-    // $query3 = $conn->prepare('INSERT INTO location (name) VALUES(?)');
+    $query3 = $conn->prepare('INSERT INTO location (name) VALUES(?)');
    
-    // // $_REQUEST["name"] = 'New York';
+    // $_REQUEST["name"] = 'New York';
         
-    // $query3->bind_param("s", $_REQUEST["name"]);
+    $query3->bind_param("s", $_REQUEST["locationName"]);
 	
-    // $query3->execute();
+    $query3->execute();
 	
-	// if (false === $query3) {
+	if (false === $query3) {
 
-	// 	$output['status']['code'] = "400";
-	// 	$output['status']['name'] = "executed";
-	// 	$output['status']['description'] = "query failed";	
-	// 	$output['data'] = [];
+		$output['status']['code'] = "400";
+		$output['status']['name'] = "executed";
+		$output['status']['description'] = "query failed";	
+		$output['data'] = [];
 
-	// 	mysqli_close($conn);
+		mysqli_close($conn);
 
-	// 	echo json_encode($output); 
+		echo json_encode($output); 
 
-	// 	exit;
+		exit;
 
-	// }
+	}
 
     $queryResult = 'SELECT p.id, p.lastName, p.firstName, p.jobTitle, p.email, d.name as department, l.name as location FROM personnel p LEFT JOIN department d ON (d.id = p.departmentID) LEFT JOIN location l ON (l.id = d.locationID) ORDER BY p.id DESC';
 
