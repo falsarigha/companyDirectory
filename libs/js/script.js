@@ -269,8 +269,8 @@ $(document).ready(function() {
             output += "<td>"+value.email+"</td>";
             output += "<td>"+value.location+"</td>";
             output += "<td>"+value.department+"</td>";
-            output += "<td><button type=\"button\" data-bs-toggle=\"modal\" data-bs-target=\"#editEmployee\" class='editBtn'><i class=\"edit far fa-edit\"></i></button>" +
-                "<button type=\"button\" data-bs-toggle=\"modal\" data-bs-target=\"#removeCard\" class= remove><i class=\"delete fas fa-trash-alt\"></i></button></td>";
+            output += "<td><button type=\"button\" title=\"Edit\" data-bs-toggle=\"modal\" data-bs-target=\"#editEmployee\" class='editBtn'><i class=\"edit far fa-edit\"></i></button>" +
+                "<button type=\"button\" title=\"Delete\" data-bs-toggle=\"modal\" data-bs-target=\"#removeCard\" class= 'remove'><i class=\"delete fas fa-trash-alt\"></i></button></td>";
             output += "</tr>";
 
 
