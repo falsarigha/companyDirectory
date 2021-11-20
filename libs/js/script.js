@@ -112,7 +112,7 @@ $(document).ready(function() {
                 });
                 
                 departmentData.push(departmentResult);
-                console.log(departmentResult)
+                //console.log(departmentResult)
             },
             error: function (request, status, error) {
                 console.log(request,status,error);
