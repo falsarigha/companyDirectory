@@ -1,5 +1,5 @@
 $(window).on("load", function() {
-    $("loader-container").hide();
+    $('#loader-container').fadeOut('slow',function(){$(this).remove();});
 });
 
 var searchBar = $("#searchBar").val();
@@ -7,6 +7,8 @@ var locationResult;
 var departmentResult;
 var id;
 var output;
+var outputLocation;
+var outputDepartment;
 var departmentResultString;
 var locationResultID;
 var locationResultString;
@@ -251,7 +253,65 @@ $(document).ready(function() {
 // get all results
     function getResult() {
 
+    //get Departments
+    $.ajax({
+        url:"libs/php/getDepartmentAndLocations.php",
+        method: "POST",
+        dataType: "json",
+        success: function(result){
+
+            let departmentData= result.data;
+
+            console.log(departmentData);
+
+            $.each(departmentData, function(key, value){
+
+            outputDepartment += "<tr id="+value.id+">";
+            outputDepartment += "<td class=\"names\">"+value.name+"</td>";
+            outputDepartment += "<td class=\"names\">"+value.locationName+"</td>";
+            outputDepartment += "<td><button type=\"button\" title=\"Edit\" data-bs-toggle=\"modal\" data-bs-target=\"#editEmployee\" class='editBtn'><i class=\"edit far fa-edit\"></i></button>" +
+                "<button type=\"button\" title=\"Delete\" data-bs-toggle=\"modal\" data-bs-target=\"#removeCard\" class= 'remove'><i class=\"delete fas fa-trash-alt\"></i></button></td>";
+            outputDepartment += "</tr>";
+
+
+
+            });
+            $('#myTableDepartment').html(outputDepartment);
+
+        },error: function (request, status, error) {
+            console.log(request,status,error);
+        }
+    })
     
+    //get Locations
+    $.ajax({
+        url:"libs/php/getAllLocations.php",
+        method: "POST",
+        dataType: "json",
+        success: function(result){
+
+            let locationData= result.data;
+
+            console.log(locationData);
+
+            $.each(locationData, function(key, value){
+
+            outputLocation += "<tr id="+value.id+">";
+            outputLocation += "<td class=\"names\">"+value.name+"</td>";
+            outputLocation += "<td><button type=\"button\" title=\"Edit\" data-bs-toggle=\"modal\" data-bs-target=\".modalLocationEdit\" class='editBtn'><i class=\"edit far fa-edit\"></i></button>" +
+            "<button type=\"button\" title=\"Delete\" data-bs-toggle=\"modal\" data-bs-target=\".modalRemoveLocation\" class= 'remove'><i class=\"delete fas fa-trash-alt\"></i></button></td>";
+            outputLocation += "</tr>";
+
+
+
+            });
+            $('#myTableLocation').html(outputLocation);
+        },error: function (request, status, error) {
+            console.log(request,status,error);
+        }
+    })
+    
+    //get employee 
     $.ajax({
         url:"libs/php/getAll.php",
         method: "POST",
@@ -265,7 +325,7 @@ $(document).ready(function() {
             $.each(databaseData, function(key, value){
 
             output += "<tr id="+value.id+">";
-            output += "<td class=\"names\">"+value.lastName+ ' ' +value.firstName+"</td>";
+            output += "<td class=\"names\">"+value.lastName+ ', ' +value.firstName+"</td>";
             output += "<td>"+value.email+"</td>";
             output += "<td>"+value.location+"</td>";
             output += "<td>"+value.department+"</td>";
@@ -276,6 +336,8 @@ $(document).ready(function() {
 
 
             });
+
+
             $('#myTable').html(output);
 
             // edit button employee
@@ -287,7 +349,7 @@ $(document).ready(function() {
                 console.log(id);
 
                 $.ajax({
-                    url:"libs/php/getAllPersonnel.php",
+                    url:"libs/php/getPersonnelByID.php", // to check
                     method: "POST",
                     dataType: "json",
                     data:{
@@ -295,13 +357,13 @@ $(document).ready(function() {
 
                     },
                     success: function(result){
-                        console.log(result.data[0])
+                        console.log(result.data.personnel)
                         
-                        firstName = result.data[0]['firstName']
-                        lastName = result.data[0]['lastName']
-                        var email = result.data[0]['email']
-                        var departmentID = result.data[0]['departmentID']
-                        var locationID = result.data[0]['locationID']
+                        firstName = result.data.personnel[0]['firstName']
+                        lastName = result.data.personnel[0]['lastName']
+                        var email = result.data.personnel[0]['email']
+                        var departmentID = result.data.personnel[0]['departmentID']
+                        var locationID = result.data.personnel[0]['locationID']
 
                         $('#firstNameEdit').val(firstName);
                         $('#lastNameEdit').val(lastName);

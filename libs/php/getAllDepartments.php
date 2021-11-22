@@ -34,7 +34,7 @@
 
 	// SQL does not accept parameters and so is not prepared
 
-	$query = 'SELECT id, name, locationID FROM department';
+	$query = 'SELECT id, name, locationID FROM department ORDER BY name';
 
 	$result = $conn->query($query);
 	
@@ -61,11 +61,13 @@
 
 	}
 
+
 	$output['status']['code'] = "200";
 	$output['status']['name'] = "ok";
 	$output['status']['description'] = "success";
 	$output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
 	$output['data'] = $data;
+
 	
 	mysqli_close($conn);
 

@@ -10,7 +10,7 @@ body,html{
     overflow: hidden;
     background-color: #D3D3D3;
 }
-#loader-container{
+/* #loader-container{
     display:flex; 
     justify-content:center; 
     align-items:center;
@@ -22,7 +22,49 @@ body,html{
     top: 0;
     left: 0;
     
+} */
+
+/*loader*/
+
+#loader-container {
+    background: #333;
+    display:flex; 
+    justify-content:center; 
+    align-items:center;
+    position:fixed;
+    height:100%;
+    width:100%;
+    z-index:9999;
+    top: 0;
+    left: 0;
+  }
+  
+  /** loader **/
+  #loader-container #loader{
+    border:1rem solid rgb(24, 26, 27);
+    border-top:1rem solid #198754;
+    border-radius:50%;
+    width:120px;
+    height:120px;
+    animation:spin 1.5s linear infinite;
+    z-index:1000
 }
+
+#loader-container #loader{
+    border:1rem solid rgb(24, 26, 27);
+    border-top:1rem solid #198754;
+    border-radius:50%;
+    width:120px;
+    height:120px;
+    animation:spin 1.5s linear infinite;
+    z-index:1000
+}
+@keyframes spin{
+    0% {transform:rotate(0deg)}
+    100%{transform:rotate(360deg)}
+}
+
+/*fine*/
 .row.content {
     margin-top: 6rem;
     width: 100vw;
