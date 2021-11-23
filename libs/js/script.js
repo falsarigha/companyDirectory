@@ -6,6 +6,7 @@ var searchBar = $("#searchBar").val();
 var locationResult;
 var departmentResult;
 var id;
+var idLocation;
 var output;
 var outputLocation;
 var outputDepartment;
@@ -269,7 +270,7 @@ $(document).ready(function() {
             outputDepartment += "<tr id="+value.id+">";
             outputDepartment += "<td class=\"names\">"+value.name+"</td>";
             outputDepartment += "<td class=\"names\">"+value.locationName+"</td>";
-            outputDepartment += "<td><button type=\"button\" title=\"Edit\" data-bs-toggle=\"modal\" data-bs-target=\"#editEmployee\" class='editBtn'><i class=\"edit far fa-edit\"></i></button>" +
+            outputDepartment += "<td><button type=\"button\" title=\"Edit\" data-bs-toggle=\"modal\" data-bs-target=\"#editEmployee\" class='editBtn editBtnDepartment'><i class=\"edit far fa-edit\"></i></button>" +
                 "<button type=\"button\" title=\"Delete\" data-bs-toggle=\"modal\" data-bs-target=\"#removeCard\" class= 'remove'><i class=\"delete fas fa-trash-alt\"></i></button></td>";
             outputDepartment += "</tr>";
 
@@ -298,7 +299,7 @@ $(document).ready(function() {
 
             outputLocation += "<tr id="+value.id+">";
             outputLocation += "<td class=\"names\">"+value.name+"</td>";
-            outputLocation += "<td><button type=\"button\" title=\"Edit\" data-bs-toggle=\"modal\" data-bs-target=\".modalLocationEdit\" class='editBtn'><i class=\"edit far fa-edit\"></i></button>" +
+            outputLocation += "<td><button type=\"button\" title=\"Edit\" data-bs-toggle=\"modal\" data-bs-target=\".modalLocationEdit\" id='editBtnLocation' class='editBtn'><i class=\"edit far fa-edit\"></i></button>" +
             "<button type=\"button\" title=\"Delete\" data-bs-toggle=\"modal\" data-bs-target=\".modalRemoveLocation\" class= 'remove'><i class=\"delete fas fa-trash-alt\"></i></button></td>";
             outputLocation += "</tr>";
 
@@ -306,6 +307,7 @@ $(document).ready(function() {
 
             });
             $('#myTableLocation').html(outputLocation);
+
         },error: function (request, status, error) {
             console.log(request,status,error);
         }
@@ -329,7 +331,7 @@ $(document).ready(function() {
             output += "<td>"+value.email+"</td>";
             output += "<td>"+value.location+"</td>";
             output += "<td>"+value.department+"</td>";
-            output += "<td><button type=\"button\" title=\"Edit\" data-bs-toggle=\"modal\" data-bs-target=\"#editEmployee\" class='editBtn'><i class=\"edit far fa-edit\"></i></button>" +
+            output += "<td><button type=\"button\" title=\"Edit\" data-bs-toggle=\"modal\" data-bs-target=\"#editEmployee\" id='editBtn' class='editBtn'><i class=\"edit far fa-edit\"></i></button>" +
                 "<button type=\"button\" title=\"Delete\" data-bs-toggle=\"modal\" data-bs-target=\"#removeCard\" class= 'remove'><i class=\"delete fas fa-trash-alt\"></i></button></td>";
             output += "</tr>";
 
@@ -342,7 +344,7 @@ $(document).ready(function() {
 
             // edit button employee
 
-            $('.editBtn').click(function() {
+            $('#tableResult #editBtn').click(function() {
 
                //find id of record and use as global
                 window.id =$(this).closest('tr').attr('id');
@@ -373,7 +375,7 @@ $(document).ready(function() {
 
                     },error: function (request, status, error) {
                         console.log(request,status,error);
-                    },
+                    }
 
 
                 })
@@ -534,7 +536,7 @@ $(document).ready(function() {
                 })
             }
     })
-    //department
+    //add department
     
     $('#btnAddDepartment').click(function(){
         var departmentNameInput= $('#addDepartment #departmentAdd').val();
@@ -614,7 +616,7 @@ $(document).ready(function() {
     })
     
     // add Location
-    $('.btnAddLocation').click(function(){
+    $('.tableResultL .btnAddLocation').click(function(){
         var locationAddInput = $('#addLocation #locationAdd').val();
         console.log(locationResultString.includes(locationAddInput));
 
@@ -653,6 +655,73 @@ $(document).ready(function() {
                 })
         }
     })
+    //edit Location btnmodal
+    $('#editBtnLocation').on('click',function(){
+        
+        console.log('ciao')
+        window.idLocation =$(this).closest('tr').attr('id');
+        console.log(idLocation)
+        
+        
+        $.ajax({
+            url:"libs/php/getLocationByID.php", // to check
+            method: "POST",
+            dataType: "json",
+            data:{
+                id: idLocation,
+
+            },
+            success: function(result){
+                console.log(result.data)
+                
+                locationName = result.data['name']
+                
+
+                $('#editLocation #locationEdit').val(locationName);
+                console.log(locationName)
+
+            },error: function (request, status, error) {
+                console.log(request,status,error);
+            }
+
+
+        })
+        
+    })
+
+    //edit submit modal
+    $('.btnAddLocationEdit').click(function(){
+        var locationEditInput =  $('#editLocation #locationEdit').val();
+        console.log(locationEditInput)
+        $.ajax({
+            url:"libs/php/insertLocation.php",
+                    method: "POST",
+                    dataType: "json",
+                    data:{
+                        id: idLocation,
+                        name: locationEditInput,
+                        
+
+                    },success: function(result){
+
+                        if(result.status.name == "ok"){
+
+                            console.log("location edited")
+                        }
+
+                        $(".modalLocation").on("hidden.bs.modal", function(){
+                            $(".modal-body").html("");
+                        });
+                        // $(document).ready(function () {
+                        //     location.reload();
+                        // });
+                    },
+                    error: function (request, status, error) {
+                        console.log(request,status,error);
+                    }
+            })
+        
+        })
     //remove Location
     $('#removeLocation').click(function(){
         var locationInputID = $('select[id=locationSelectRemove] option').filter(':selected').val();
@@ -698,6 +767,12 @@ $(document).ready(function() {
         $("#myTable tr").filter(function() {
         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
+        $("#myTableDepartment tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+        $("#myTableLocation tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
     });
     }
 
@@ -711,6 +786,12 @@ $(document).ready(function() {
             var value = $(this).find('option:selected').text();
             $("#myTable tr").filter(function() {
             $(this).toggle($(this).text().indexOf(value) > -1)
+            $("#myTableDepartment tr").filter(function() {
+                $(this).toggle($(this).text().indexOf(value) > -1)
+            });
+            $("#myTableLocation tr").filter(function() {
+                $(this).toggle($(this).text().indexOf(value) > -1)
+            });
             if(selDepartment){
                 $('select[name=selectDepartments]').prop("selectedIndex", 0);
             }
@@ -724,6 +805,12 @@ $(document).ready(function() {
             var value = $(this).find('option:selected').text();
             $("#myTable tr").filter(function() {
             $(this).toggle($(this).text().indexOf(value) > -1)
+            $("#myTableDepartment tr").filter(function() {
+                $(this).toggle($(this).text().indexOf(value) > -1)
+            });
+            $("#myTableLocation tr").filter(function() {
+                $(this).toggle($(this).text().indexOf(value) > -1)
+            });
             if(selLocation){
                 $('select[name=selectLocations]').prop("selectedIndex", 0);
             }

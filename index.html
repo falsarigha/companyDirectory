@@ -90,13 +90,13 @@
                         <!--JS plugin-->
                         <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Employees</button>
+                                <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" href="#pills-home" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Employees</button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Locations</button>
+                                <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" href="#pills-profile" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Locations</button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Departments</button>
+                                <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" href="#pills-contact" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Departments</button>
                             </li>
                         </ul>
                         <div class="tab-content" id="pills-tabContent">
@@ -119,9 +119,9 @@
                             </table>
                         </div>
                         </div>
-                        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                            <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar" class="tableResult">
-                            <table class="table table-dark table-striped  align-middle" id="tableResult">
+                        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" id="profiles">
+                            <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar" class="tableResultL">
+                            <table class="table table-dark table-striped  align-middle" id="tableResultLocation">
                                 <thead>
                                     <th scope="col">Name</th>
                                     <th scope="col">Options</th>
@@ -134,8 +134,8 @@
                         </div>
                         </div>
                         <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-                            <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar" class="tableResult">
-                            <table class="table table-dark table-striped  align-middle" id="tableResult">
+                            <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar" class="tableResultD">
+                            <table class="table table-dark table-striped  align-middle" id="tableResultDepartment">
                                 <thead>
                                     <th scope="col">Department</th>
                                     <th scope="col">Location</th>
@@ -473,7 +473,7 @@
         <!--edit Location modal-->
         <div
             class="modal modalLocationEdit fade"
-            id="addLocation"
+            id="editLocation"
             data-bs-backdrop="static"
             data-bs-keyboard="false"
             tabindex="-1"
@@ -492,7 +492,7 @@
                         <label for="locationAdd" class="form-label">
                         Edit Location:
                         </label>
-                        <input type="text" class="form-control locationAdd" id="locationAdd" placeholder="Location Name" required/>
+                        <input type="text" class="form-control locationEdit" id="locationEdit" placeholder="Location Name" required/>
                         </div>           
                     </form>
                     </div>
