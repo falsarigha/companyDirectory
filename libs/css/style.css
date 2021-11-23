@@ -10,6 +10,9 @@ body,html{
     overflow: hidden;
     background-color: #D3D3D3;
 }
+.btnReset{
+    margin-top: 2rem;
+}
 /* #loader-container{
     display:flex; 
     justify-content:center; 
@@ -63,6 +66,9 @@ body,html{
     0% {transform:rotate(0deg)}
     100%{transform:rotate(360deg)}
 }
+.nav-pills>li+li {
+    margin-left: 1rem;
+  } 
 .span{
     margin-top:0.1rem;
     border-color: black;
@@ -98,6 +104,7 @@ body,html{
 }
 .table-responsive{
     height:90vh;
+    width:100%;
     overflow-y:scroll;
     -ms-overflow-style: none;  /* hide scrollbar for IE and Edge */
     scrollbar-width: none; /* hide scrollbar for Firefox */
@@ -118,7 +125,7 @@ thead tr:nth-child(1) th{
     margin-top: -2rem;
     padding-left: 0;
     height: 100vh;
-    width:100vw;
+    width:90vp;
 }
 
 /* #searchBar{
@@ -155,19 +162,31 @@ thead tr:nth-child(1) th{
 
 
 @media only screen and (max-width: 400px) {
+    .nav-pills{
+        margin-top: 5rem;
+    }
+    .nav-pills>li+li {
+        margin-left: 0;
+      } 
     .navbar{
         height: 6rem !important;
     }
     .sidenav {
         padding-top: 4rem;
         background-color: #f1f1f1;
-        height: 40vh;
+        height: 100vh;
+        padding-bottom: 5rem;
+    }
+    .btnReset{
+        margin-top: 1rem;
+        padding-bottom: 2rem;
+        z-index: 1;
     }
     .navbar{
         height: 5rem;
     }
     .center{
-        padding-top: 4rem;
+        padding-top: 20rem;
         height: 100vh;
         width:100vw;
         padding-left: 0;
@@ -177,19 +196,25 @@ thead tr:nth-child(1) th{
     
 }
 @media only screen and (max-width: 600px) {
+    .nav-pills{
+        margin-top: 1rem;
+    }
+    .nav-pills>li+li {
+        margin-left: 0;
+      } 
     .navbar{
         height: 6rem !important;
     }
     .sidenav {
         padding-top: 4rem;
         background-color: #f1f1f1;
-        height: 40vh;
+        height: 50vh;
     }
     .navbar{
         height: 5rem;
     }
     .center{
-        padding-top: 4rem;
+        padding-top: 8rem;
         height: 100vh;
         width:100vw;
         padding-left: 0;
@@ -199,6 +224,12 @@ thead tr:nth-child(1) th{
     
 }
 @media only screen and (max-width: 280px) {
+    .nav-pills{
+        margin-top: 1rem;
+    }
+    .nav-pills>li+li {
+        margin-left: 0;
+      } 
     .navbar{
         height: 6rem !important;
     }
