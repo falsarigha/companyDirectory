@@ -34,7 +34,7 @@
                     <input id="searchBar"
                         class="form-control me-4" 
                         type="search" 
-                        placeholder="Search Employee" 
+                        placeholder="Search" 
                         aria-label="Search"
                         >
                         <!--<button class="btn btn-outline-success me-4 searchBar" type="button">Search</button>-->
@@ -104,8 +104,8 @@
                              <!--<h3>Test</h3>
                         <p>Lorem ipsum...</p>-->
                         <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar" class="tableResult">
-                            <table class="table table-dark table-striped  align-left" id="tableResult">
-                                <thead>
+                            <table class="table table-dark table-striped" id="tableResult">
+                                <thead class='text-start'>
                                     <th scope="col">Full Name</th>
                                     <th scope="col" >Email</th>
                                     <th scope="col">Location</th>
@@ -121,8 +121,8 @@
                         </div>
                         <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" id="profiles">
                             <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar" class="tableResultL">
-                            <table class="table table-dark table-striped  align-left" id="tableResultLocation">
-                                <thead>
+                            <table class="table table-dark table-striped  align-middle" id="tableResultLocation">
+                                <thead class='text-start'>
                                     <th scope="col">Name</th>
                                     <th scope="col">Options</th>
                                 </thead>
@@ -136,7 +136,7 @@
                         <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
                             <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar" class="tableResultD">
                             <table class="table table-dark table-striped  align-middle" id="tableResultDepartment">
-                                <thead>
+                                <thead class='text-start'>
                                     <th scope="col">Department</th>
                                     <th scope="col">Location</th>
                                     <th scope="col">Options</th>
@@ -223,14 +223,14 @@
                     id="btnAdd"
                     data-bs-dismiss="modal"
                     >
-                    Submit
+                    Save
                     </button>
                     <button
                     type="button"
                     class="btn btn-secondary"
                     data-bs-dismiss="modal"
                     >
-                    Close
+                    Cancel
                     </button>
                     
                 </div>
@@ -306,14 +306,14 @@
                     data-bs-dismiss="modal"
                     id="#btnUpdate"
                     >
-                    Submit
+                    Save
                     </button>
                     <button
                     type="button"
                     class="btn btn-secondary"
                     data-bs-dismiss="modal"
                     >
-                    Close
+                    Cancel
                     </button>
                     
                 </div>
@@ -336,12 +336,12 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Are you sure to delete this record? <span class="removeRecord"></span></p>
+                    <p>Are you sure to delete <span id="removeRecordEmployee"></span> ?</p>
                     
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btnRemove btn btn-danger">Delete</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                    <button type="button" class="btnRemove btn btn-danger">Yes</button>
                 </div>
                 </div>
             </div>
@@ -449,14 +449,7 @@
                         id="btnAddLocation"
                         data-bs-dismiss="modal"
                         >
-                        Submit
-                        </button>
-                        <button type="button" 
-                        class="btn btn-danger"
-                        data-bs-toggle="modal" 
-                        data-bs-target=".modalRemoveLocation" 
-                        >
-                        Delete
+                        Save
                         </button>
                         <button
                         type="button"
@@ -503,14 +496,7 @@
                         id="btnAddLocation"
                         data-bs-dismiss="modal"
                         >
-                        Submit
-                        </button>
-                        <button type="button" 
-                        class="btn btn-danger"
-                        data-bs-toggle="modal" 
-                        data-bs-target=".modalRemoveLocation" 
-                        >
-                        Delete
+                        Save
                         </button>
                         <button
                         type="button"
@@ -575,26 +561,27 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form>
-                <div class="modal-body">                
+                <div class="modal-body modalMiddle">                
                 <div class="mb-3">
                         <label for="locationSelectRemove" class="form-label">
-                        Delete Location:
+                        Are you sure you want to delete:
                         </label>
                         <select class="form-select" name="deliteLocationFilter" id="locationSelectRemove">
-                            <option value="selectALocation">Select a Location</option>
+                            <option value="selectALocation">Select a Location</option>?
                         </select>
+                        <div class="span"><p><span id="removeRecordLocation" >Error! The location has dependants, you cannot delete it</span></p></div>
                     </div>
                 </div>
                 </form>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
                     <button 
                     type="button"
-                    class="btn btn-danger"
+                    class="btn btn-danger closeLocation"
                     id="removeLocation"
-                    data-bs-dismiss="modal"
+                    
                     >
-                    Delete
+                    Yes
                     </button>
                 </div>
                 </div>
@@ -640,21 +627,14 @@
                         class="btnAddDepartment btn btn-primary"
                         id="btnAddDepartment"
                         data-bs-dismiss="modal">
-                        Submit
-                        </button>
-                        <button type="button" 
-                        class="btn btn-danger"
-                        data-bs-toggle="modal" 
-                        data-bs-target=".modalRemove" 
-                        >
-                        Delete
+                        Save
                         </button>
                         <button
                         type="button"
                         class="btn btn-secondary"
                         data-bs-dismiss="modal"                  
                         >
-                        Close
+                        Cancel
                         </button>
                         
                     </div>
@@ -701,14 +681,14 @@
                         class="btnEditDepartment btn btn-primary"
                         id="btnAddDepartmentEdit"
                         data-bs-dismiss="modal">
-                        Submit
+                        Save
                         </button>
                         <button
                         type="button"
                         class="btn btn-secondary"
                         data-bs-dismiss="modal"                  
                         >
-                        Close
+                        Cancel
                         </button>
                         
                     </div>
@@ -752,7 +732,7 @@
         <!--modal remove department-->
         <div
             class="modal fade modalRemove" 
-            id="staticBackdrop" 
+            id="staticBackdrop modalRemoveDepartment" 
             data-bs-backdrop="static" 
             data-bs-keyboard="false" 
             tabindex="-1" 
@@ -766,28 +746,30 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form>
-                <div class="modal-body">                
+                <div class="modal-body modalText">                
                 <div class="mb-3">
-                        <label for="departmentSelectRemove" class="form-label">
-                        Delete Department:
+                        Are you sure you want to delete:
                         </label>
                         <select class="form-select" id="departmentSelectRemove" name='deaprtmentFilterD'>
                             <option value="selectADepartment">
                             Select a Department
                             </option>
+                            
                         </select>
+                        <br>
+                        <div class="span"><p><span id="removeRecordDepartment" >Error! The department has dependants, you cannot delete it</span></p></div>
                     </div>
                 </div>
                 </form>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary closeDepartment" data-bs-dismiss="modal">No</button>
                     <button 
                     type="button"
                     class="btn btn-danger"
                     id="removeDepartment"
-                    data-bs-dismiss="modal"
+                    
                     >
-                    Delete
+                    Yes
                     </button>
                 </div>
                 </div>

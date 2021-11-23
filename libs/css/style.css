@@ -63,12 +63,16 @@ body,html{
     0% {transform:rotate(0deg)}
     100%{transform:rotate(360deg)}
 }
-
+.span{
+    margin-top:0.1rem;
+    border-color: black;
+    color:#DC3545;
+}
 /*fine*/
 .row.content {
     margin-top: 6rem;
     width: 100vw;
-    height: 100vh
+    height: 100vh;
 }
 
 .navbar-collapse{
