@@ -7,6 +7,7 @@ var locationResult;
 var departmentResult;
 var id;
 var idLocation;
+var idDepartment;
 var output;
 var outputLocation;
 var outputDepartment;
@@ -178,6 +179,24 @@ $(document).ready(function() {
                             
                         }),
                     );
+                        //modal editDepLocation
+                        $("#locationSelectDepartmentEdit").append(
+                            $("<option>", {
+                                value: locationResult[index].id,
+                                text: locationResult[index].name,
+        
+                                
+                            }),
+                        );
+                    //     //remove previous option filter bar
+                    // var usedNamesLD= {};
+                    // $("select[name='LocationFilterDL'] > option").each(function () {
+                    //     if(usedNamesLD[this.text]) {
+                    //         $(this).remove();
+                    //     } else {
+                    //         usedNamesLD[this.text] = this.value;
+                    //     }
+                    // });
                    //remove previous option filter bar
                     var usedNamesL= {};
                     $("select[name='selectLocations'] > option").each(function () {
@@ -270,7 +289,7 @@ $(document).ready(function() {
             outputDepartment += "<tr id="+value.id+">";
             outputDepartment += "<td class=\"names\">"+value.name+"</td>";
             outputDepartment += "<td class=\"names\">"+value.locationName+"</td>";
-            outputDepartment += "<td><button type=\"button\" title=\"Edit\" data-bs-toggle=\"modal\" data-bs-target=\"#editEmployee\" class='editBtn editBtnDepartment'><i class=\"edit far fa-edit\"></i></button>" +
+            outputDepartment += "<td><button type=\"button\" title=\"Edit\" data-bs-toggle=\"modal\" data-bs-target=\"#editDepartment\" class='editBtn editBtnDepartment'><i class=\"edit far fa-edit\"></i></button>" +
                 "<button type=\"button\" title=\"Delete\" data-bs-toggle=\"modal\" data-bs-target=\"#removeCard\" class= 'remove'><i class=\"delete fas fa-trash-alt\"></i></button></td>";
             outputDepartment += "</tr>";
 
@@ -299,7 +318,7 @@ $(document).ready(function() {
 
             outputLocation += "<tr id="+value.id+">";
             outputLocation += "<td class=\"names\">"+value.name+"</td>";
-            outputLocation += "<td><button type=\"button\" title=\"Edit\" data-bs-toggle=\"modal\" data-bs-target=\".modalLocationEdit\" id='editBtnLocation' class='editBtn'><i class=\"edit far fa-edit\"></i></button>" +
+            outputLocation += "<td><button type=\"button\" title=\"Edit\" data-bs-toggle=\"modal\" data-bs-target=\".modalLocationEdit\" id='editBtnLocation' class='editBtn editBtnLocation'><i class=\"edit far fa-edit\"></i></button>" +
             "<button type=\"button\" title=\"Delete\" data-bs-toggle=\"modal\" data-bs-target=\".modalRemoveLocation\" class= 'remove'><i class=\"delete fas fa-trash-alt\"></i></button></td>";
             outputLocation += "</tr>";
 
@@ -581,6 +600,85 @@ $(document).ready(function() {
         }
         
     })
+    //edit Department btnmodal
+    $('#tableResultDepartment').on('click',' .editBtnDepartment',function(){
+        
+        
+        window.idDepartment =$(this).closest('tr').attr('id');
+        console.log(idDepartment)
+        
+        
+        $.ajax({
+            url:"libs/php/getDepAndLocByID.php", // to check
+            method: "POST",
+            dataType: "json",
+            data:{
+                id: idDepartment,
+
+            },
+            success: function(result){
+                console.log(result.data)
+                
+                departmentName = result.data[0]['name']
+                locationDepID = result.data[0]['locationID']
+                
+
+                $('#editDepartment #departmentEdit').val(departmentName);
+                $('#editDepartment #locationSelectDepartmentEdit').val(locationDepID);
+                
+                console.log(departmentName)
+                console.log(locationDepID)
+
+            },error: function (request, status, error) {
+                console.log(request,status,error);
+            }
+
+
+        })
+        
+    })
+    //edit submit department modal
+    $('#btnAddDepartmentEdit').click(function(){
+       
+        var departmentEditInputName =  $('#editDepartment #departmentEdit').val();
+        var departmentSelectEditID =  $('select[id=locationSelectDepartmentEdit] option').filter(':selected').val();
+        var departmentSelectEditName =  $('select[id=locationSelectDepartmentEdit] option').filter(':selected').text();
+        console.log(idDepartment)
+        $.ajax({
+            url:"libs/php/editDepartmentAndLocation.php",
+                method: "POST",
+                dataType: "json",
+                data:{
+                    id: idDepartment,
+                    name: departmentEditInputName,
+                    locationID: departmentSelectEditID,
+                    locationName: departmentSelectEditName
+                    
+
+                },success: function(result){
+
+                    if(result.status.name == "ok"){
+
+                        console.log(departmentEditInputName);
+                        console.log(departmentSelectEditID);
+                        console.log(departmentSelectEditName)
+                        
+                        $("#editDepartment").modal("hide");
+                
+                    
+                        $(document).ready(function () {
+                            location.reload();
+                        });
+                    }
+
+                    
+                },
+                error: function (request, status, error) {
+                    console.log(request,status,error);
+                }
+            })
+        
+        })
     
     //remove department
     $('#removeDepartment').click(function(){
@@ -616,7 +714,7 @@ $(document).ready(function() {
     })
     
     // add Location
-    $('.tableResultL .btnAddLocation').click(function(){
+    $('.btnAddLocation').click(function(){
         var locationAddInput = $('#addLocation #locationAdd').val();
         console.log(locationResultString.includes(locationAddInput));
 
@@ -656,11 +754,11 @@ $(document).ready(function() {
         }
     })
     //edit Location btnmodal
-    $('#editBtnLocation').on('click',function(){
+    $('#tableResultLocation').on('click',' .editBtnLocation',function(){
         
-        console.log('ciao')
+        
         window.idLocation =$(this).closest('tr').attr('id');
-        console.log(idLocation)
+        
         
         
         $.ajax({
@@ -674,7 +772,7 @@ $(document).ready(function() {
             success: function(result){
                 console.log(result.data)
                 
-                locationName = result.data['name']
+                locationName = result.data[0]['name']
                 
 
                 $('#editLocation #locationEdit').val(locationName);
@@ -691,34 +789,39 @@ $(document).ready(function() {
 
     //edit submit modal
     $('.btnAddLocationEdit').click(function(){
+       
         var locationEditInput =  $('#editLocation #locationEdit').val();
         console.log(locationEditInput)
         $.ajax({
-            url:"libs/php/insertLocation.php",
-                    method: "POST",
-                    dataType: "json",
-                    data:{
-                        id: idLocation,
-                        name: locationEditInput,
+            url:"libs/php/editLocation.php",
+                method: "POST",
+                dataType: "json",
+                data:{
+                    id: idLocation,
+                    name: locationEditInput,
+                    
+
+                },success: function(result){
+
+                    if(result.status.name == "ok"){
+
+                        // console.log(idLocation);
+                        // console.log(locationEditInput);
+                        // console.log("location edited")
                         
-
-                    },success: function(result){
-
-                        if(result.status.name == "ok"){
-
-                            console.log("location edited")
-                        }
-
-                        $(".modalLocation").on("hidden.bs.modal", function(){
-                            $(".modal-body").html("");
-                        });
-                        // $(document).ready(function () {
-                        //     location.reload();
-                        // });
-                    },
-                    error: function (request, status, error) {
-                        console.log(request,status,error);
+                        $("#editLocation").modal("hide");
+                
+                    
+                    $(document).ready(function () {
+                        location.reload();
+                    });
                     }
+
+                    
+                },
+                error: function (request, status, error) {
+                    console.log(request,status,error);
+                }
             })
         
         })

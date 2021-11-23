@@ -1,7 +1,7 @@
 <?php
 
 	// example use from browser
-	// http://localhost/companydirectory/libs/php/insertDepartment.php?name=New%20Department&locationID=<id>
+	// http://localhost/companydirectory/libs/php/getAll.php
 
 	// remove next two lines for production
 	
@@ -9,9 +9,7 @@
 	error_reporting(E_ALL);
 
 	$executionStartTime = microtime(true);
-	
-	// this includes the login details
-	
+
 	include("config.php");
 
 	header('Content-Type: application/json; charset=UTF-8');
@@ -33,17 +31,17 @@
 		exit;
 
 	}	
+    
+	// SQL does not accept parameters and so is not prepared
 
-	// SQL statement accepts parameters and so is prepared to avoid SQL injection.
-	// $_REQUEST used for development / debugging. Remember to change to $_POST for production
+	$query = $conn->prepare('UPDATE department d LEFT JOIN location l ON (l.id = d.locationID) SET d.name = ?, d.locationID = ? ,l.name = ? WHERE d.id = ?');
 
-	$query = $conn->prepare('UPDATE location set name = ? WHERE id = ?');
-
-    // $_REQUEST['name'] = 'Alio';
-    // $_REQUEST['id'] = 24;
-
-
-	$query->bind_param("si", $_REQUEST['name'], $_REQUEST['id']);
+    //  $_REQUEST["name"] = '97';
+    //  $_REQUEST["locationID"] = 'Mora';
+    //  $_REQUEST["locationName"] = 'Lora';
+    //  $_REQUEST["id"] = 'loram@qwerty.net';
+    
+	$query->bind_param("sisi", $_REQUEST["name"], $_REQUEST["locationID"], $_REQUEST["locationName"], $_REQUEST["id"]);
 
 	$query->execute();
 	
@@ -61,7 +59,35 @@
 		exit;
 
 	}
-    
+
+    // $query = 'SELECT p.id, p.lastName, p.firstName, p.jobTitle, p.email, d.name as department, l.name as location FROM personnel p LEFT JOIN department d ON (d.id = p.departmentID) LEFT JOIN location l ON (l.id = d.locationID) ORDER BY p.lastName, p.firstName, d.name, l.name';
+
+	// $result = $conn->query($query);
+	
+	// if (!$result) {
+
+	// 	$output['status']['code'] = "400";
+	// 	$output['status']['name'] = "executed";
+	// 	$output['status']['description'] = "query failed";	
+	// 	$output['data'] = [];
+
+	// 	mysqli_close($conn);
+
+	// 	echo json_encode($output); 
+
+	// 	exit;
+
+	// }
+   
+   	// $data = [];
+
+	// while ($row = mysqli_fetch_assoc($result)) {
+
+	// 	array_push($data, $row);
+
+	// }
+
+	
 
 	$output['status']['code'] = "200";
 	$output['status']['name'] = "ok";

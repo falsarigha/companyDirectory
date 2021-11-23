@@ -36,7 +36,7 @@
 	// $_REQUEST used for development / debugging. Remember to change to $_POST for production
 
 	$query = $conn->prepare('SELECT * FROM location WHERE id =  ?');
-
+    // $_REQUEST['id']=2;
 	$query->bind_param("i", $_REQUEST['id']);
 
 	$query->execute();
