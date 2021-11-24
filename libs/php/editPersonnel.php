@@ -34,7 +34,7 @@
     
 	// SQL does not accept parameters and so is not prepared
 
-	$query = $conn->prepare('UPDATE personnel p LEFT JOIN department d ON (d.id = p.departmentID) LEFT JOIN location l ON (l.id = d.locationID) SET p.firstName = ?, p.lastName = ?, p.jobTitle = " ", p.email = ?, p.departmentID = ?, d.locationID = ? WHERE p.id = ?');
+	$query = $conn->prepare('UPDATE personnel p LEFT JOIN department d ON (d.id = p.departmentID) LEFT JOIN location l ON (l.id = d.locationID) SET p.firstName = ?, p.lastName = ?, p.jobTitle = " ", p.email = ?, p.departmentID = ? WHERE p.id = ?');
 
     //  $_REQUEST["id"] = '97';
     //  $_REQUEST["lastName"] = 'Mora';
@@ -42,7 +42,7 @@
     //  $_REQUEST["email"] = 'loram@qwerty.net';
     //  $_REQUEST["departmentID"] = '3';
     //  $_REQUEST["locationID"] = '2';
-	$query->bind_param("sssiii", $_REQUEST["firstName"], $_REQUEST["lastName"], $_REQUEST["email"], $_REQUEST["departmentID"], $_REQUEST["locationID"], $_REQUEST["id"]);
+	$query->bind_param("sssii", $_REQUEST["firstName"], $_REQUEST["lastName"], $_REQUEST["email"], $_REQUEST["departmentID"], $_REQUEST["id"]);
 
 	$query->execute();
 	
