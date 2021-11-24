@@ -103,11 +103,12 @@ body,html{
     table-layout: fixed;
 }
 .table-responsive{
-    height:90vh;
+    height:85vh;
     width:100%;
     overflow-y:scroll;
     -ms-overflow-style: none;  /* hide scrollbar for IE and Edge */
     scrollbar-width: none; /* hide scrollbar for Firefox */
+    
 } 
 /* Hide scrollbar for Chrome, Safari and Opera */
 .table-responsive::-webkit-scrollbar {
@@ -162,6 +163,9 @@ thead tr:nth-child(1) th{
 
 
 @media only screen and (max-width: 400px) {
+    .table-responsive{
+        height: 85vh;
+    }
     .nav-pills{
         margin-top: 5rem;
     }
@@ -196,6 +200,9 @@ thead tr:nth-child(1) th{
     
 }
 @media only screen and (max-width: 600px) {
+    .table-responsive{
+        height: 85vh;
+    }
     .nav-pills{
         margin-top: 1rem;
     }
@@ -214,7 +221,7 @@ thead tr:nth-child(1) th{
         height: 5rem;
     }
     .center{
-        padding-top: 8rem;
+        padding-top: 2rem;
         height: 100vh;
         width:100vw;
         padding-left: 0;
@@ -224,6 +231,9 @@ thead tr:nth-child(1) th{
     
 }
 @media only screen and (max-width: 280px) {
+    .table-responsive{
+        height: 85vh;
+    }
     .nav-pills{
         margin-top: 1rem;
     }

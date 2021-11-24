@@ -381,7 +381,7 @@ $(document).ready(function() {
             // edit button employee
 
             $('#tableResult #editBtn').click(function() {
-
+                $('#errorEmpty').hide();
                //find id of record and use as global
                 window.id =$(this).closest('tr').attr('id');
                 console.log(id);
@@ -479,7 +479,7 @@ $(document).ready(function() {
 
     //Edit Employee modal button
     $('.btnUpdate').on('click', function(){
-
+        
         var firstName = $('#editEmployee #firstNameEdit').val();
         var lastName = $('#editEmployee #lastNameEdit').val();
         var email = $('#editEmployee #emailEdit').val();
@@ -490,7 +490,10 @@ $(document).ready(function() {
         var departmentName = $('select[id=departmentSelectEdit] option').filter(':selected').text();
         var outputRow = "<tr id="+id+" class='text-start'><td class=\"names\">"+lastName+" "+firstName+"</td><td>"+email+"</td><td>"+locationName+"</td><td>"+departmentName+"</td>";
         var outputRowEmail = "<tr id="+id+" class='text-start'><td class=\"names\">"+lastName+" "+firstName+"</td><td>"+email+"</td><td>";
-        if((output.includes(outputRow)) || (output.includes(outputRowEmail))){
+        //console.log($('select[id=departmentSelectEdit] option').filter(':selected').val('selectADepartment'))
+        console.log(departmentID)
+        
+        if((output.includes(outputRow)) || (output.includes(outputRowEmail)) ){
                             
             $('.editEmployee').modal('hide');
             $('.modalErrorUpdate').modal('show');
@@ -499,6 +502,9 @@ $(document).ready(function() {
             
         }else{           
         
+            if(firstName && lastName  && email && !($('select[id=departmentSelectEdit]')[0].selectedIndex === 0)){
+                
+                
             $.ajax({
                 url:"libs/php/editPersonnel.php",
                 method: "POST",
@@ -516,9 +522,12 @@ $(document).ready(function() {
                     console.log(result.data)
                     if (result.status.name == "ok") {
                         console.log("Employee updated");
-                        $("#editEmployee").modal("hide");
-                    
                         
+                    
+                        $('#editEmployee').on('click','.saveEmployee',function(){
+                            $('#errorEmpty').hide();
+                            $("#editEmployee").modal("hide");
+                        })
                         $(document).ready(function () {
                             location.reload();
                         });
@@ -528,10 +537,22 @@ $(document).ready(function() {
                 error: function (request, status, error) {
                     console.log(request,status,error);
                 },
-            })
+            })} else{
+                $('.modalAddE').show();
+                $('.modalAddE #errorEmpty').show();
+
+                $('.editEmployee').show()
+                
+                $('.modalAddE').on('click','.cancelEmployee',function(){
+                    $('#errorEmpty').hide();
+                })
+            }
         }
     });
-
+    
+    $('#addEmployees').click(function() {
+        $('#errorEmptyAdd').hide();
+    })
     //add Employee
     $('.btnAdd').on('click', function(){
             
@@ -548,14 +569,13 @@ $(document).ready(function() {
             //check if employee already exist
             if((output.includes(lastName +", "+ firstName)) && (output.includes(email))){
                             
-                $('.modalAdd').modal('hide');
-                $('.modalError').modal('show');
+                $('.modalAdd #errorEmptyAdd').show();
 
                 //console.log((output.includes(lastName +" "+ firstName)) && (output.includes(email)))
                 
                 
             }else{           
-            
+                if(firstName && lastName  && email && !($('select[id=departmentSelectAdd]')[0].selectedIndex === 0)){
                 $.ajax({
                     url:"libs/php/insertPersonnel.php",
                     method: "POST",
@@ -590,7 +610,16 @@ $(document).ready(function() {
                     error: function (request, status, error) {
                         console.log(request,status,error);
                     }
-                })
+                })}else{
+                    $('.modalAdd').show();
+                    $('.modalAdd #errorEmptyAdd').show();
+
+                     $('.modalAdd').show()
+                
+                    $('.modalAdd').on('click','.cancelEmployeeAdd',function(){
+                        $('#errorEmptyAdd').hide();
+                    })
+                }
             }
     })
     //add department
@@ -752,7 +781,7 @@ $(document).ready(function() {
         })
         $('#removeDepartment').click(function(){
             var departmentInputID = $('select[id=departmentSelectRemove] option').filter(':selected').val();
-            console.log(departmentInputID)
+            //console.log(departmentInputID)
             $.ajax({
                 url:"libs/php/checkCountDepartmentID.php",
                     method: "POST",
@@ -812,7 +841,7 @@ $(document).ready(function() {
     // add Location
     $('.btnAddLocation').click(function(){
         var locationAddInput = $('#addLocation #locationAdd').val();
-        console.log(locationResultString.includes(locationAddInput));
+        //console.log(locationResultString.includes(locationAddInput));
 
         if(locationResultString.includes(locationAddInput)){
 
@@ -833,7 +862,7 @@ $(document).ready(function() {
     
                             if(result.status.name == "ok"){
     
-                                console.log("location added")
+                                //console.log("location added")
                             }
     
                             $(".modalLocation").on("hidden.bs.modal", function(){
@@ -872,7 +901,7 @@ $(document).ready(function() {
                 
 
                 $('#editLocation #locationEdit').val(locationName);
-                console.log(locationName)
+                //console.log(locationName)
 
             },error: function (request, status, error) {
                 console.log(request,status,error);

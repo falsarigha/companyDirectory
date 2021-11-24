@@ -42,7 +42,8 @@
                                 type="button" 
                                 class="btn btn-outline-success btn-lg ms-2" 
                                 data-bs-toggle="modal" 
-                                data-bs-target="#addEmployee">
+                                data-bs-target="#addEmployee"
+                                id="addEmployees">
                                 <i title="Add Employee" class="fas fa-user-plus"></i>
                             </button>
                             <button 
@@ -214,21 +215,22 @@
                             </option>
                         </select>
                         </div>
+                        <div class="span"><p><span id="errorEmptyAdd" >Error! All the field must be filled out</span></p></div>
                     </form>
                 </div>
                     
                 <div class="modal-footer">
                     <button
                     type="button"
-                    class="btnAdd btn btn-primary"
+                    class="btnAdd btn btn-primary saveEmployeeAdd"
                     id="btnAdd"
-                    data-bs-dismiss="modal"
+                    
                     >
                     Save
                     </button>
                     <button
                     type="button"
-                    class="btn btn-secondary"
+                    class="btn btn-secondary cancelEmployeeAdd"
                     data-bs-dismiss="modal"
                     >
                     Cancel
@@ -255,7 +257,7 @@
                     <h5 class="modal-title" id="editEmployeeLabel">Edit New Employee</h5>             
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body modalAddE">
                     <form action=""  method="post">
                         <div class="mb-3" >
                         <label for="firstNameEdit" class="form-label">
@@ -291,27 +293,28 @@
                         <label for="departmentSelectEdit" class="form-label">
                         Department:
                         </label>
-                        <select class="form-select" name="deaprtmentFilter" id="departmentSelectEdit">
-                            <option value="selectADepartment">
+                        <select class="form-select" name="deaprtmentFilter" id="departmentSelectEdit" required>
+                            <option>
                             Select a Department
                             </option>
                         </select>
                         </div>
+                        <div class="span"><p><span id="errorEmpty" >Error! All the field must be filled out</span></p></div>
                     </form>
                 </div>
                     
                 <div class="modal-footer">
                     <button
                     type="button"
-                    class="btnUpdate btn btn-primary"
-                    data-bs-dismiss="modal"
+                    class="btnUpdate btn btn-primary saveEmployee"
+                    
                     id="#btnUpdate"
                     >
                     Save
                     </button>
                     <button
                     type="button"
-                    class="btn btn-secondary"
+                    class="btn btn-secondary cancelEmployee"
                     data-bs-dismiss="modal"
                     >
                     Cancel
