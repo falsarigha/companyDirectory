@@ -828,7 +828,7 @@ $(document).ready(function() {
     
                             if(result.status.name == "ok"){
     
-                                console.log("removed location")
+                                console.log("location added")
                             }
     
                             $(".modalLocation").on("hidden.bs.modal", function(){
