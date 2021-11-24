@@ -305,6 +305,7 @@ $(document).ready(function() {
                 
 
             });
+            //if it remove it
             var slice = outputDepartment.slice(9);
             console.log(slice)
             $('#myTableDepartment').html(slice)
@@ -400,13 +401,13 @@ $(document).ready(function() {
                         window.lastName = result.data.personnel[0]['lastName']
                         var email = result.data.personnel[0]['email']
                         var departmentID = result.data.personnel[0]['departmentID']
-                        var locationID = result.data.personnel[0]['locationID']
+                        //var locationID = result.data.personnel[0]['locationID']
 
                         $('#firstNameEdit').val(firstName);
                         $('#lastNameEdit').val(lastName);
                         $('#emailEdit').val(email);
                         $('#departmentSelectEdit').val(departmentID);
-                        $('#locationSelectEdit').val(locationID);
+                        //$('#locationSelectEdit').val(locationID);
 
                     },error: function (request, status, error) {
                         console.log(request,status,error);
@@ -483,7 +484,7 @@ $(document).ready(function() {
         var lastName = $('#editEmployee #lastNameEdit').val();
         var email = $('#editEmployee #emailEdit').val();
         var departmentID = $('select[id=departmentSelectEdit] option').filter(':selected').val();
-        var locationID = $('select[id=locationSelectEdit] option').filter(':selected').val();
+        //var locationID = $('select[id=locationSelectEdit] option').filter(':selected').val();
 
         var locationName = $('select[id=locationSelectEdit] option').filter(':selected').text();
         var departmentName = $('select[id=departmentSelectEdit] option').filter(':selected').text();
