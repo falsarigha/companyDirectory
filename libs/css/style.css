@@ -103,7 +103,7 @@ body,html{
     table-layout: fixed;
 }
 .table-responsive{
-    height:85vh;
+    height:84vh;
     width:100%;
     overflow-y:scroll;
     -ms-overflow-style: none;  /* hide scrollbar for IE and Edge */
