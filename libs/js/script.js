@@ -289,7 +289,7 @@ $(document).ready(function() {
 
             let departmentData= result.data;
 
-            //console.log(departmentData);
+            console.log(departmentData);
             
             $.each(departmentData, function(key, value){
                 
@@ -305,8 +305,9 @@ $(document).ready(function() {
                 
 
             });
-            outputDepartment.replace(null, " ");
-            myTableDepartment = $('#myTableDepartment').html(outputDepartment);
+            var slice = outputDepartment.slice(9);
+            console.log(slice)
+            $('#myTableDepartment').html(slice)
 
         },error: function (request, status, error) {
             console.log(request,status,error);
@@ -325,7 +326,8 @@ $(document).ready(function() {
             //console.log(locationData);
 
             $.each(locationData, function(key, value){
-                (value == null) ? "" : value
+                
+                
 
                 outputLocation += "<tr id="+value.id+" class='text-start'>";
                 outputLocation += "<td class=\"locationNames\">"+(value.name || "")+"</td>";
@@ -336,7 +338,9 @@ $(document).ready(function() {
 
 
             });
-            myTableLocation = $('#myTableLocation').html(outputLocation);
+            var sliceLocation = outputLocation.slice(9);
+            console.log(outputLocation)
+            $('#myTableLocation').html(sliceLocation);
             
         },error: function (request, status, error) {
             console.log(request,status,error);
@@ -355,7 +359,7 @@ $(document).ready(function() {
             //console.log(databaseData);
 
             $.each(databaseData, function(key, value){
-                (value == null) ? "" : value
+                
 
                 output += "<tr id="+value.id+" class='text-start'>";
                 output += "<td class=\"names\">"+value.lastName+ ', ' +value.firstName+"</td>";
@@ -369,9 +373,9 @@ $(document).ready(function() {
 
 
             });
-
-
-            myTable = $('#myTable').html(output);
+            var sliceEmployee = output.slice(9);
+            console.log(sliceEmployee)
+            $('#myTable').html(sliceEmployee);
 
             // edit button employee
 
@@ -504,7 +508,7 @@ $(document).ready(function() {
                     lastName: capitalizeFirstLetter(lastName),
                     email: email,
                     departmentID: departmentID,
-                    locationID: locationID
+                    
 
                 },
                 success: function(result){
@@ -561,7 +565,7 @@ $(document).ready(function() {
                         lastName: capitalizeFirstLetter(lastName),
                         email: email,
                         departmentID: departmentID,
-                        locationName: locationName
+                        
                         
 
                     },
