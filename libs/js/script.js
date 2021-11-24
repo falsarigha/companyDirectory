@@ -17,6 +17,9 @@ var departmentResultString;
 var locationResultID;
 var locationResultString;
 
+function capitalizeFirstLetter(string){
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
 
 $(document).ready(function() {
     getResult();
@@ -289,18 +292,20 @@ $(document).ready(function() {
             //console.log(departmentData);
             
             $.each(departmentData, function(key, value){
-                (value == null) ? "" : value
                 
+                
+                //console.log(value)
                 outputDepartment += "<tr id="+value.id+" class='text-start'>";
                 outputDepartment += "<td class=\"departmentNames\">"+value.name+"</td>";
-                outputDepartment += "<td>"+value.locationName+"</td>";
+                outputDepartment += "<td>"+(value.locationName|| "")+"</td>";
                 outputDepartment += "<td><button type=\"button\" title=\"Edit\" data-bs-toggle=\"modal\" data-bs-target=\"#editDepartment\" class='editBtn editBtnDepartment'><i class=\"edit far fa-edit\"></i></button>" +
                     "<button type=\"button\" title=\"Delete\" data-bs-toggle=\"modal\" data-bs-target=\".modalRemove\" class= 'remove removeDepartment'><i class=\"delete fas fa-trash-alt\"></i></button></td>";
                 outputDepartment += "</tr>";
 
-
+                
 
             });
+            outputDepartment.replace(null, " ");
             myTableDepartment = $('#myTableDepartment').html(outputDepartment);
 
         },error: function (request, status, error) {
@@ -323,7 +328,7 @@ $(document).ready(function() {
                 (value == null) ? "" : value
 
                 outputLocation += "<tr id="+value.id+" class='text-start'>";
-                outputLocation += "<td class=\"locationNames\">"+value.name+"</td>";
+                outputLocation += "<td class=\"locationNames\">"+(value.name || "")+"</td>";
                 outputLocation += "<td><button type=\"button\" title=\"Edit\" data-bs-toggle=\"modal\" data-bs-target=\".modalLocationEdit\" id='editBtnLocation' class='editBtn editBtnLocation'><i class=\"edit far fa-edit\"></i></button>" +
                 "<button type=\"button\" title=\"Delete\" data-bs-toggle=\"modal\" data-bs-target=\".modalRemoveLocation\" class= 'remove removeLocation'><i class=\"delete fas fa-trash-alt\"></i></button></td>";
                 outputLocation += "</tr>";
@@ -355,8 +360,8 @@ $(document).ready(function() {
                 output += "<tr id="+value.id+" class='text-start'>";
                 output += "<td class=\"names\">"+value.lastName+ ', ' +value.firstName+"</td>";
                 output += "<td>"+value.email+"</td>";
-                output += "<td>"+value.location+"</td>";
-                output += "<td>"+value.department+"</td>";
+                output += "<td>"+(value.location ||"")+"</td>";
+                output += "<td>"+(value.department|| "")+"</td>";
                 output += "<td><button type=\"button\" title=\"Edit\" data-bs-toggle=\"modal\" data-bs-target=\"#editEmployee\" id='editBtn' class='editBtn'><i class=\"edit far fa-edit\"></i></button>" +
                     "<button type=\"button\" title=\"Delete\" data-bs-toggle=\"modal\" data-bs-target=\"#removeCard\" class= 'remove removeEmployee'><i class=\"delete fas fa-trash-alt\"></i></button></td>";
                 output += "</tr>";
@@ -495,8 +500,8 @@ $(document).ready(function() {
                 dataType: "json",
                 data:{
                     id: id,
-                    firstName: firstName,
-                    lastName: lastName,
+                    firstName: capitalizeFirstLetter(firstName),
+                    lastName: capitalizeFirstLetter(lastName),
                     email: email,
                     departmentID: departmentID,
                     locationID: locationID
@@ -552,8 +557,8 @@ $(document).ready(function() {
                     dataType: "json",
                     data:{
                         
-                        firstName: firstName,
-                        lastName: lastName,
+                        firstName: capitalizeFirstLetter(firstName),
+                        lastName: capitalizeFirstLetter(lastName),
                         email: email,
                         departmentID: departmentID,
                         locationName: locationName
@@ -602,7 +607,7 @@ $(document).ready(function() {
                         dataType: "json",
                         data:{
                             
-                            name: departmentNameInput,
+                            name: capitalizeFirstLetter(departmentNameInput),
                             locationID: locationName,
                             
                             
@@ -678,7 +683,7 @@ $(document).ready(function() {
                 dataType: "json",
                 data:{
                     id: idDepartment,
-                    name: departmentEditInputName,
+                    name: capitalizeFirstLetter(departmentEditInputName),
                     locationID: departmentSelectEditID,
                     locationName: departmentSelectEditName
                     
@@ -816,7 +821,7 @@ $(document).ready(function() {
                         dataType: "json",
                         data:{
                             
-                            name: locationAddInput,
+                            name: capitalizeFirstLetter(locationAddInput),
                             
     
                         },success: function(result){
@@ -877,14 +882,14 @@ $(document).ready(function() {
     $('.btnAddLocationEdit').click(function(){
        
         var locationEditInput =  $('#editLocation #locationEdit').val();
-        console.log(locationEditInput)
+        //console.log(locationEditInput)
         $.ajax({
             url:"libs/php/editLocation.php",
                 method: "POST",
                 dataType: "json",
                 data:{
                     id: idLocation,
-                    name: locationEditInput,
+                    name: capitalizeFirstLetter(locationEditInput),
                     
 
                 },success: function(result){
