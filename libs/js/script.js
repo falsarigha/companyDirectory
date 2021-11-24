@@ -2,6 +2,7 @@ $(window).on("load", function() {
     $('#loader-container').fadeOut('slow',function(){$(this).remove();});
 });
 
+
 var searchBar = $("#searchBar").val();
 var locationResult;
 var departmentResult;
@@ -237,14 +238,15 @@ $(document).ready(function() {
                     //     }
                     // });
 
-                    // var usedNameFilterLoco = {};
-                    // $("select[name='LocationFilterD'] > option").each(function () {
-                    //     if(usedNameFilterLoco[this.text]) {
-                    //         $(this).remove();
-                    //     } else {
-                    //         usedNameFilterLoco[this.text] = this.value;
-                    //     }
-                    // });
+                    var usedNameFilterLoco = {};
+                    $("select[name='LocationFilterD'] > option").each(function () {
+                       
+                        if(usedNameFilterLoco[this.text] || usedNameFilterLoco[this.text]) {
+                            $(this).remove();
+                        } else {
+                            usedNameFilterLoco[this.text] = this.value;
+                        }
+                    });
 
                     // var usedNameFilterLoca = {};
                     // $("select[name='LocationFilterDo'] > option").each(function () {
@@ -284,21 +286,22 @@ $(document).ready(function() {
 
             let departmentData= result.data;
 
-            console.log(departmentData);
-
+            //console.log(departmentData);
+            
             $.each(departmentData, function(key, value){
-
-            outputDepartment += "<tr id="+value.id+" class='text-start'>";
-            outputDepartment += "<td class=\"departmentNames\">"+value.name+"</td>";
-            outputDepartment += "<td>"+value.locationName+"</td>";
-            outputDepartment += "<td><button type=\"button\" title=\"Edit\" data-bs-toggle=\"modal\" data-bs-target=\"#editDepartment\" class='editBtn editBtnDepartment'><i class=\"edit far fa-edit\"></i></button>" +
-                "<button type=\"button\" title=\"Delete\" data-bs-toggle=\"modal\" data-bs-target=\".modalRemove\" class= 'remove removeDepartment'><i class=\"delete fas fa-trash-alt\"></i></button></td>";
-            outputDepartment += "</tr>";
+                (value == null) ? "" : value
+                
+                outputDepartment += "<tr id="+value.id+" class='text-start'>";
+                outputDepartment += "<td class=\"departmentNames\">"+value.name+"</td>";
+                outputDepartment += "<td>"+value.locationName+"</td>";
+                outputDepartment += "<td><button type=\"button\" title=\"Edit\" data-bs-toggle=\"modal\" data-bs-target=\"#editDepartment\" class='editBtn editBtnDepartment'><i class=\"edit far fa-edit\"></i></button>" +
+                    "<button type=\"button\" title=\"Delete\" data-bs-toggle=\"modal\" data-bs-target=\".modalRemove\" class= 'remove removeDepartment'><i class=\"delete fas fa-trash-alt\"></i></button></td>";
+                outputDepartment += "</tr>";
 
 
 
             });
-            $('#myTableDepartment').html(outputDepartment);
+            myTableDepartment = $('#myTableDepartment').html(outputDepartment);
 
         },error: function (request, status, error) {
             console.log(request,status,error);
@@ -314,21 +317,22 @@ $(document).ready(function() {
 
             let locationData= result.data;
 
-            console.log(locationData);
+            //console.log(locationData);
 
             $.each(locationData, function(key, value){
+                (value == null) ? "" : value
 
-            outputLocation += "<tr id="+value.id+" class='text-start'>";
-            outputLocation += "<td class=\"locationNames\">"+value.name+"</td>";
-            outputLocation += "<td><button type=\"button\" title=\"Edit\" data-bs-toggle=\"modal\" data-bs-target=\".modalLocationEdit\" id='editBtnLocation' class='editBtn editBtnLocation'><i class=\"edit far fa-edit\"></i></button>" +
-            "<button type=\"button\" title=\"Delete\" data-bs-toggle=\"modal\" data-bs-target=\".modalRemoveLocation\" class= 'remove removeLocation'><i class=\"delete fas fa-trash-alt\"></i></button></td>";
-            outputLocation += "</tr>";
+                outputLocation += "<tr id="+value.id+" class='text-start'>";
+                outputLocation += "<td class=\"locationNames\">"+value.name+"</td>";
+                outputLocation += "<td><button type=\"button\" title=\"Edit\" data-bs-toggle=\"modal\" data-bs-target=\".modalLocationEdit\" id='editBtnLocation' class='editBtn editBtnLocation'><i class=\"edit far fa-edit\"></i></button>" +
+                "<button type=\"button\" title=\"Delete\" data-bs-toggle=\"modal\" data-bs-target=\".modalRemoveLocation\" class= 'remove removeLocation'><i class=\"delete fas fa-trash-alt\"></i></button></td>";
+                outputLocation += "</tr>";
 
 
 
             });
-            $('#myTableLocation').html(outputLocation);
-
+            myTableLocation = $('#myTableLocation').html(outputLocation);
+            
         },error: function (request, status, error) {
             console.log(request,status,error);
         }
@@ -346,22 +350,23 @@ $(document).ready(function() {
             //console.log(databaseData);
 
             $.each(databaseData, function(key, value){
+                (value == null) ? "" : value
 
-            output += "<tr id="+value.id+" class='text-start'>";
-            output += "<td class=\"names\">"+value.lastName+ ', ' +value.firstName+"</td>";
-            output += "<td>"+value.email+"</td>";
-            output += "<td>"+value.location+"</td>";
-            output += "<td>"+value.department+"</td>";
-            output += "<td><button type=\"button\" title=\"Edit\" data-bs-toggle=\"modal\" data-bs-target=\"#editEmployee\" id='editBtn' class='editBtn'><i class=\"edit far fa-edit\"></i></button>" +
-                "<button type=\"button\" title=\"Delete\" data-bs-toggle=\"modal\" data-bs-target=\"#removeCard\" class= 'remove removeEmployee'><i class=\"delete fas fa-trash-alt\"></i></button></td>";
-            output += "</tr>";
+                output += "<tr id="+value.id+" class='text-start'>";
+                output += "<td class=\"names\">"+value.lastName+ ', ' +value.firstName+"</td>";
+                output += "<td>"+value.email+"</td>";
+                output += "<td>"+value.location+"</td>";
+                output += "<td>"+value.department+"</td>";
+                output += "<td><button type=\"button\" title=\"Edit\" data-bs-toggle=\"modal\" data-bs-target=\"#editEmployee\" id='editBtn' class='editBtn'><i class=\"edit far fa-edit\"></i></button>" +
+                    "<button type=\"button\" title=\"Delete\" data-bs-toggle=\"modal\" data-bs-target=\"#removeCard\" class= 'remove removeEmployee'><i class=\"delete fas fa-trash-alt\"></i></button></td>";
+                output += "</tr>";
 
 
 
             });
 
 
-            $('#myTable').html(output);
+            myTable = $('#myTable').html(output);
 
             // edit button employee
 
@@ -567,9 +572,9 @@ $(document).ready(function() {
                             
                             
                         }
-                        // $(document).ready(function () {
-                        //     location.reload();
-                        // });
+                        $(document).ready(function () {
+                            location.reload();
+                        });
 
                     },
                     error: function (request, status, error) {
@@ -1095,7 +1100,8 @@ $(document).ready(function() {
     }
    
     $('.reset').on('click', function(){
-        getResult();
+        $("#searchBar").val(" ").trigger("keyup");
+        $("#searchBar").val("").trigger("keyup");
         $('select[name=selectDepartments]').prop("selectedIndex", 0);
         $('select[name=selectLocations]').prop("selectedIndex", 0);
         $('#searchBar').val('');
